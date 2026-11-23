@@ -48,21 +48,7 @@ jobs:
             "has_cert=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           }
 
-      - name: Download previous release for incremental package
-        shell: pwsh
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          $ErrorActionPreference = 'Continue'
-          $version = ([xml](Get-Content 'Directory.Build.props' -Raw)).Project.PropertyGroup.Version
-          $previous = gh release view --json tagName --jq .tagName 2>$null
-          if ($LASTEXITCODE -eq 0 -and $previous -and $previous -ne "v$version") {
-            New-Item -ItemType Directory -Force 'artifacts/prerequisites/update-base' | Out-Null
-            gh release download $previous --pattern '*-win-x64-portable.zip' --dir 'artifacts/prerequisites/update-base' --clobber
-            if ($LASTEXITCODE -ne 0) { Write-Host 'Incremental base unavailable, falling back to full package.' }
-          } else {
-            Write-Host "No previous release found; building full package for v$version."
-          }
+      # Fork 仓库没有历史 Release，增量基础包步骤已禁用，直接走完整构建。
 
       - name: Build installer and portable package
         shell: pwsh
