@@ -12,7 +12,7 @@
         <x:Double x:Key="SettingsRowMinHeight">52</x:Double>
         <Thickness x:Key="SettingsScrollPadding">4,0,20,24</Thickness>
 
-        <!-- 左侧分区导航项：48 高、选中态＝暖金底 + 金色指示条；点击/展开切换右侧内容 -->
+        <!-- 左侧分区导航项：48 高、选中态＝影视仓蓝底 + 蓝色指示条；点击/展开切换右侧内容 -->
         <Style x:Key="SettingsNavSectionStyle" TargetType="Expander">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -902,7 +902,7 @@
                         <StackPanel x:Name="AboutPane" Spacing="16" Visibility="Collapsed">
                             <StackPanel Spacing="4">
                                 <TextBlock Text="关于" Style="{StaticResource SectionTitleText}" />
-                                <TextBlock Text="PCbox · 深墨底与暖金流光的桌面影院。" Style="{StaticResource SecondaryText}" />
+                                <TextBlock Text="PCbox · 影视仓蓝主题桌面影院。" Style="{StaticResource SecondaryText}" />
                             </StackPanel>
                             <Border Style="{StaticResource SettingsCardStyle}">
                                 <StackPanel Spacing="6">
@@ -921,7 +921,7 @@
                                     <Grid MinHeight="{StaticResource SettingsRowMinHeight}" ColumnSpacing="{StaticResource SpaceLarge}">
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                         <TextBlock Text="视觉语言" Style="{StaticResource LabelText}" Width="{StaticResource SettingsFormLabelWidth}" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="1" Text="深墨底 · 暖金流光" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Text="影视仓蓝 · 纯黑影院" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
                                     </Grid>
                                     <Border Height="1" Background="{ThemeResource DividerBrush}" />
                                     <Grid MinHeight="{StaticResource SettingsRowMinHeight}" ColumnSpacing="{StaticResource SpaceLarge}">
