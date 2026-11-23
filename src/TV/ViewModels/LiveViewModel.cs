@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TV.Models;
@@ -135,7 +136,12 @@ public sealed partial class LiveViewModel : ObservableObject
         {
             var config = await _services.Config.LoadAsync(cancellationToken: token);
             var selectedUrl = SelectedRepository?.Url;
-            var fresh = config.Lives.OrderBy(source => source.IsBuiltIn).ToArray();
+            var custom = await LoadCustomSourcesAsync(token);
+            // 远程源 + 用户自定义源（自定义源优先展示、IsBuiltIn=false）
+            var fresh = config.Lives.Concat(custom)
+                .GroupBy(source => source.Url, StringComparer.OrdinalIgnoreCase)
+                .Select(group => group.First())
+                .OrderBy(source => source.IsBuiltIn).ToArray();
             if (!AvailableSources.SequenceEqual(fresh))
             {
                 var firstImport = AvailableSources.Any(source => !source.IsBuiltIn)
@@ -184,6 +190,58 @@ public sealed partial class LiveViewModel : ObservableObject
     {
         if (SelectedRepository is null) _ = ReloadAsync();
         else SelectedRepository = null;
+    }
+
+    private const string CustomLiveSourcesKey = "custom_live_sources";
+
+    private async Task<List<LiveSource>> LoadCustomSourcesAsync(CancellationToken token)
+    {
+        try
+        {
+            var raw = await _services.Database.GetSettingAsync(CustomLiveSourcesKey, token);
+            if (string.IsNullOrWhiteSpace(raw)) return [];
+            var list = JsonSerializer.Deserialize<List<LiveSource>>(raw, JsonUtil.Options) ?? [];
+            foreach (var source in list) source.IsBuiltIn = false;
+            return list;
+        }
+        catch { return []; }
+    }
+
+    private async Task SaveCustomSourcesAsync(IReadOnlyList<LiveSource> sources, CancellationToken token = default)
+    {
+        var raw = JsonSerializer.Serialize(sources, JsonUtil.Options);
+        await _services.Database.SetSettingAsync(CustomLiveSourcesKey, raw, token);
+    }
+
+    /// <summary>添加一个自定义直播源（m3u/m3u8 订阅地址或单频道播放地址）。返回错误信息，成功返回 null。</summary>
+    public async Task<string?> AddCustomSourceAsync(string name, string url)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return "请输入直播源名称";
+        if (string.IsNullOrWhiteSpace(url)) return "请输入直播源地址";
+        if (!Uri.TryCreate(url.Trim(), UriKind.Absolute, out var uri) || uri.Scheme is not ("http" or "https"))
+            return "地址必须是 http/https 开头的完整链接";
+
+        var token = _load?.Token ?? CancellationToken.None;
+        var sources = await LoadCustomSourcesAsync(token);
+        if (sources.Any(source => string.Equals(source.Url, url.Trim(), StringComparison.OrdinalIgnoreCase)))
+            return "该直播源已存在";
+        sources.Add(new LiveSource { Name = name.Trim(), Url = url.Trim(), Type = 0, IsBuiltIn = false });
+        await SaveCustomSourcesAsync(sources, token);
+        await ReloadAsync();
+        SelectedRepository = AvailableSources.LastOrDefault(source => !source.IsBuiltIn && source.Url == url.Trim());
+        StatusMessage = $"已添加直播源「{name.Trim()}」";
+        return null;
+    }
+
+    /// <summary>删除一个自定义直播源。</summary>
+    public async Task RemoveCustomSourceAsync(LiveSource source)
+    {
+        if (source is null || source.IsBuiltIn) return;
+        var sources = await LoadCustomSourcesAsync(CancellationToken.None);
+        sources.RemoveAll(item => string.Equals(item.Url, source.Url, StringComparison.OrdinalIgnoreCase));
+        await SaveCustomSourcesAsync(sources);
+        await ReloadAsync();
+        StatusMessage = $"已删除直播源「{source.Name}」";
     }
 
     partial void OnSelectedRepositoryChanged(LiveSource? value)

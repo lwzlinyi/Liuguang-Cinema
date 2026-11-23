@@ -37,6 +37,62 @@ public sealed partial class LivePage : Page
         if (DataContext is LiveViewModel model) model.Groups.CollectionChanged -= OnGroupsChanged;
     }
 
+    /// <summary>弹出对话框添加自定义直播源（名称 + m3u/m3u8 地址）。</summary>
+    private async void OnAddSourceClick(object sender, RoutedEventArgs e)
+    {
+        var nameBox = new TextBox { Header = "直播源名称", PlaceholderText = "例如：我的 IPTV" };
+        var urlBox = new TextBox { Header = "直播源地址", PlaceholderText = "https://example.com/live.m3u8", AcceptsReturn = false };
+        var stack = new StackPanel { Spacing = 12 };
+        stack.Children.Add(nameBox);
+        stack.Children.Add(urlBox);
+        var dialog = new ContentDialog
+        {
+            Title = "添加直播源",
+            Content = stack,
+            PrimaryButtonText = "添加",
+            CloseButtonText = "取消",
+            DefaultButton = ContentDialogButton.Primary,
+            XamlRoot = XamlRoot
+        };
+        var result = await dialog.ShowAsync();
+        if (result != ContentDialogResult.Primary) return;
+        var error = await ViewModel.AddCustomSourceAsync(nameBox.Text, urlBox.Text);
+        if (error is not null)
+        {
+            var tip = new ContentDialog { Title = "无法添加", Content = error, CloseButtonText = "知道了", XamlRoot = XamlRoot };
+            await tip.ShowAsync();
+        }
+    }
+
+    /// <summary>删除当前选中的自定义直播源（内置源不可删）。</summary>
+    private async void OnRemoveSourceClick(object sender, RoutedEventArgs e)
+    {
+        var source = ViewModel.SelectedRepository;
+        if (source is null)
+        {
+            var tip = new ContentDialog { Title = "提示", Content = "请先选择一个直播源", CloseButtonText = "知道了", XamlRoot = XamlRoot };
+            await tip.ShowAsync();
+            return;
+        }
+        if (source.IsBuiltIn)
+        {
+            var tip = new ContentDialog { Title = "提示", Content = "内置直播源不能删除", CloseButtonText = "知道了", XamlRoot = XamlRoot };
+            await tip.ShowAsync();
+            return;
+        }
+        var confirm = new ContentDialog
+        {
+            Title = "删除直播源",
+            Content = $"确定删除「{source.Name}」吗？",
+            PrimaryButtonText = "删除",
+            CloseButtonText = "取消",
+            DefaultButton = ContentDialogButton.Close,
+            XamlRoot = XamlRoot
+        };
+        if (await confirm.ShowAsync() == ContentDialogResult.Primary)
+            await ViewModel.RemoveCustomSourceAsync(source);
+    }
+
     private void OnGroupsChanged(object? sender, NotifyCollectionChangedEventArgs e) => UpdateGroupSection();
 
     /// <summary>分组列表为空（未加载 / 加载失败）时隐藏整块「分组」，避免只留标题、下方空一片。</summary>

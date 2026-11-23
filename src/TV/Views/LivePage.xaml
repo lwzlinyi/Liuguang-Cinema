@@ -104,7 +104,21 @@
 
                     <!-- 内置与导入直播源共用一个选择器。 -->
                     <StackPanel x:Name="SourceSection" Spacing="{StaticResource SpaceSmall}">
-                        <TextBlock Text="直播源" Style="{StaticResource LabelText}" />
+                        <Grid ColumnSpacing="{StaticResource SpaceMini}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="直播源" Style="{StaticResource LabelText}" VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4" HorizontalAlignment="Right">
+                                <Button Content="添加" Click="OnAddSourceClick" Style="{StaticResource GhostButtonStyle}"
+                                        Padding="8,0" MinHeight="26" Height="26" AutomationProperties.Name="添加直播源"
+                                        ToolTipService.ToolTip="添加直播源（m3u/m3u8 地址）" />
+                                <Button Content="删除" Click="OnRemoveSourceClick" Style="{StaticResource GhostButtonStyle}"
+                                        Padding="8,0" MinHeight="26" Height="26" AutomationProperties.Name="删除直播源"
+                                        ToolTipService.ToolTip="删除当前选中的自定义直播源" />
+                            </StackPanel>
+                        </Grid>
                         <controls:AnchoredChoice ItemsSource="{Binding AvailableSources}"
                                                  SelectedItem="{Binding SelectedRepository, Mode=TwoWay}"
                                                  DisplayMemberPath="Name" PlaceholderText="内置直播源"

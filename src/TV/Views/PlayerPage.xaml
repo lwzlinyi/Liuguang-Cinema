@@ -201,9 +201,18 @@
                             ToolTipService.ToolTip="返回 (Esc)" AutomationProperties.Name="返回">
                         <FontIcon Glyph="&#xE72B;" FontSize="{StaticResource FontSizeSection}" />
                     </Button>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="0">
-                        <TextBlock Text="{Binding Title}" Style="{StaticResource CardTitleText}"
-                                   MaxLines="1" TextTrimming="CharacterEllipsis" />
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="{Binding Title}" Style="{StaticResource CardTitleText}"
+                                       MaxLines="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                            <!-- 当前视频分辨率徽章（如 1080P / 4K） -->
+                            <Border Background="{ThemeResource AccentFillBrush}" CornerRadius="{StaticResource RadiusTag}"
+                                    Padding="7,2" VerticalAlignment="Center"
+                                    Visibility="{Binding ResolutionText, Converter={StaticResource StringToVisibility}}">
+                                <TextBlock Text="{Binding ResolutionText}" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="{ThemeResource AccentInkBrush}" />
+                            </Border>
+                        </StackPanel>
                         <TextBlock Text="{Binding Subtitle}" Style="{StaticResource MetaText}"
                                    MaxLines="1" TextTrimming="CharacterEllipsis"
                                    Visibility="{Binding Subtitle, Converter={StaticResource StringToVisibility}}" />

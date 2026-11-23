@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LibVLCSharp.Shared;
@@ -75,6 +76,8 @@ public sealed partial class PlayerViewModel : ObservableObject
     public ObservableCollection<Episode> Episodes { get; } = [];
     [ObservableProperty] private string _title = "尚未播放";
     [ObservableProperty] private string _subtitle = string.Empty;
+    /// <summary>播放中视频的分辨率标签，如 1080P，显示在播放器标题行。</summary>
+    [ObservableProperty] private string _resolutionText = string.Empty;
     [ObservableProperty] private string _statusMessage = string.Empty;
     [ObservableProperty] private bool _isPlaying;
     [ObservableProperty] private bool _isBuffering;
@@ -310,6 +313,7 @@ public sealed partial class PlayerViewModel : ObservableObject
             SubtitleDelayMs = 0;
             AudioDelayMs = 0;
             MediaInfoText = string.Empty;
+            ResolutionText = string.Empty;
             StatusMessage = "正在打开媒体…";
             await _viewReady.Task.WaitAsync(TimeSpan.FromSeconds(8), token);
             await _services.Player.PlayAsync(media, token);
@@ -1214,7 +1218,18 @@ public sealed partial class PlayerViewModel : ObservableObject
                 _hasPlayedMedia = true;
                 ReadFixedVideoQuality(snapshot.VideoFormat);
                 if (!string.IsNullOrEmpty(snapshot.MediaInfo) && MediaInfoText != snapshot.MediaInfo)
+                {
                     MediaInfoText = snapshot.MediaInfo;
+                    // 从 "1920×1080 · 30 fps · …" 中解析分辨率，映射为 1080P/4K 等标签
+                    var sizeMatch = Regex.Match(snapshot.MediaInfo, @"(\d+)\s*[×xX]\s*(\d+)");
+                    if (sizeMatch.Success && int.TryParse(sizeMatch.Groups[2].Value, out var h) && h > 0)
+                    {
+                        var w = int.TryParse(sizeMatch.Groups[1].Value, out var parsedW) ? parsedW : 0;
+                        ResolutionText = h >= 2160 ? "4K" : h >= 1440 ? "2K" :
+                                         h >= 1080 ? (w >= 3840 ? "4K" : "1080P") :
+                                         h >= 720 ? "720P" : h >= 480 ? "480P" : $"{w}×{h}";
+                    }
+                }
             }
             IsBuffering = snapshot.State is VLCState.Opening or VLCState.Buffering;
             BufferingText = snapshot.State == VLCState.Buffering

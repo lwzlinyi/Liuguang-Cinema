@@ -44,6 +44,9 @@ public sealed partial class MainWindow : Window
         }
         else
         {
+            // 影视仓式布局：隐藏左侧栏，导航统一走顶部全局导航条。
+            NavPane.Visibility = Visibility.Collapsed;
+            PaneColumn.Width = new GridLength(0);
             try
             {
                 if (Microsoft.UI.Composition.SystemBackdrops.MicaController.IsSupported())
@@ -257,7 +260,7 @@ public sealed partial class MainWindow : Window
 
     private void SyncNavSelection(string tag)
     {
-        if (App.PlayerOnly) return;
+        if (App.PlayerOnly || NavPane.Visibility == Visibility.Collapsed) return;
         SettingsButton.Background = tag == "settings" ? (Microsoft.UI.Xaml.Media.Brush)Application.Current.Resources["SelectionBrush"] : TransparentBrush;
         if (tag == "settings")
         {
@@ -343,64 +346,34 @@ public sealed partial class MainWindow : Window
     private void OnSettingsClick(object sender, RoutedEventArgs e) => ViewModel.NavigateCommand.Execute("settings");
     private void OnSearchNavClick(object sender, RoutedEventArgs e) => OpenSearch();
 
+    // ===== 影视仓式顶部全局导航 =====
+    private void OnTopHistoryClick(object sender, RoutedEventArgs e) => NavigateLibraryTab(0);
+    private void OnTopLiveClick(object sender, RoutedEventArgs e) => ViewModel.NavigateCommand.Execute("live");
+    private void OnTopSearchClick(object sender, RoutedEventArgs e) => OpenSearch();
+    private void OnTopConfigClick(object sender, RoutedEventArgs e) => ViewModel.NavigateCommand.Execute("settings");
+    private void OnTopLineClick(object sender, RoutedEventArgs e) => ViewModel.NavigateCommand.Execute("settings");
+    private void OnTopLocalClick(object sender, RoutedEventArgs e) => NavigateLibraryTab(3);
+    private void OnTopFavoriteClick(object sender, RoutedEventArgs e) => NavigateLibraryTab(1);
+    private void OnTopPushClick(object sender, RoutedEventArgs e) => OpenSearch();
+
+    /// <summary>打开媒体库并切到指定标签页：0=历史 1=收藏 2=下载 3=本地。</summary>
+    private void NavigateLibraryTab(int tab)
+    {
+        ViewModel.Library.SelectedTab = tab;
+        ViewModel.NavigateCommand.Execute("library");
+    }
+
     private bool _narrowPane;
     private void UpdatePaneLayout()
     {
         if (ShellRoot.XamlRoot is null) return;
-        if (App.PlayerOnly)
-        {
-            PaneColumn.Width = new GridLength(0);
-            return;
-        }
-        var hidePane = _currentTag == "player" || _fullScreen || _compact;
-        NavPane.Visibility = hidePane ? Visibility.Collapsed : Visibility.Visible;
-        if (hidePane)
-        {
-            PaneColumn.Width = new GridLength(0);
-            return;
-        }
-        var narrow = ShellRoot.ActualWidth < 920;
-        _narrowPane = narrow;
-        if (narrow)
-        {
-            PaneColumn.Width = new GridLength(76);
-        }
-        else
-        {
-            if (_cachedWidePaneWidth <= 0)
-            {
-                var labels = new FrameworkElement[] { BrandText, NavLabelVod, NavLabelLive, NavLabelLibrary, NavLabelCloud, NavLabelCast, NavLabelSettings };
-                var available = new Windows.Foundation.Size(double.PositiveInfinity, double.PositiveInfinity);
-                var maxText = 0d;
-                foreach (var label in labels)
-                {
-                    label.Visibility = Visibility.Visible;
-                    label.Measure(available);
-                    if (label.DesiredSize.Width > maxText) maxText = label.DesiredSize.Width;
-                }
-                var brandWidth = BrandText.DesiredSize.Width + 56;
-                var navigationWidth = maxText + 92;
-                _cachedWidePaneWidth = Math.Clamp(Math.Max(brandWidth, navigationWidth), 196, 320);
-            }
-            PaneColumn.Width = new GridLength(_cachedWidePaneWidth);
-        }
-        var labelVisibility = narrow ? Visibility.Collapsed : Visibility.Visible;
-        BrandText.Visibility = NavLabelVod.Visibility = NavLabelLive.Visibility = NavLabelLibrary.Visibility = NavLabelCloud.Visibility = NavLabelCast.Visibility = NavLabelSettings.Visibility = labelVisibility;
-        NavSearchLabel.Visibility = NavSearchHint.Visibility = labelVisibility;
-        NavSearchButton.Margin = narrow ? new Thickness(18, 4, 18, 6) : new Thickness(10, 4, 10, 6);
-        NavSearchButton.Padding = narrow ? new Thickness(0) : new Thickness(12, 0, 12, 0);
-        NavSearchButton.HorizontalContentAlignment = narrow ? HorizontalAlignment.Center : HorizontalAlignment.Stretch;
-        var alignment = narrow ? HorizontalAlignment.Center : HorizontalAlignment.Left;
-        NavContentVod.HorizontalAlignment = NavContentLive.HorizontalAlignment = NavContentLibrary.HorizontalAlignment = NavContentCloud.HorizontalAlignment = NavContentCast.HorizontalAlignment = NavContentSettings.HorizontalAlignment = alignment;
-        SettingsButton.HorizontalContentAlignment = narrow ? HorizontalAlignment.Center : HorizontalAlignment.Left;
-        SettingsButton.Padding = narrow ? new Thickness(0) : new Thickness(17, 0, 14, 0);
-        BrandBlock.Margin = narrow ? new Thickness(0, 0, 0, 0) : new Thickness(20, 0, 0, 0);
-        BrandBlock.HorizontalAlignment = narrow ? HorizontalAlignment.Center : HorizontalAlignment.Left;
-        var currentNav = _currentTag == "settings"
-            ? (FrameworkElement?)SettingsButton
-            : NavList.Items.OfType<ListViewItem>().FirstOrDefault(i => i.Tag as string == _currentTag)
-                ?? NavList.SelectedItem as FrameworkElement;
-        ScheduleIndicatorGlide(currentNav);
+        // 影视仓式布局：侧栏永久隐藏，顶部导航条负责所有一级导航。
+        // 播放器/全屏/画中画时额外隐藏顶部导航条，保持沉浸。
+        TopNavBar.Visibility = (_currentTag == "player" || _fullScreen || _compact)
+            ? Visibility.Collapsed : Visibility.Visible;
+        NavPane.Visibility = Visibility.Collapsed;
+        PaneColumn.Width = new GridLength(0);
+        // 侧栏已永久隐藏，无需旧版宽度/标签/指示条计算。
     }
 
     private void OnBackClick(object sender, RoutedEventArgs e) => GoBack();
