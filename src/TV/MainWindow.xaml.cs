@@ -28,6 +28,7 @@ public sealed partial class MainWindow : Window
     private bool _leavingPlayer;
     private Task? _leavePlayerTask;
     private readonly WindowTray? _tray;
+    private Microsoft.UI.Dispatching.DispatcherQueueTimer? _clockTimer;
     private WindowCloseBehavior _closeBehavior;
     private bool _titleInputQueued;
     private RectInt32[]? _titleInputRegions;
@@ -64,6 +65,7 @@ public sealed partial class MainWindow : Window
         RestorePlacement();
         AppWindow.Changed += (_, _) => CapturePlacement();
         Title = "PCbox";
+        StartClock();
         Diagnostics.Log("MainWindow initialized");
         if (!App.PlayerOnly) App.Services.Sniffer.Attach(ShellRoot);
         ViewModel = new MainViewModel(App.Services, DispatcherQueue);
@@ -388,6 +390,22 @@ public sealed partial class MainWindow : Window
             RestoreWindow();
         }
         catch (Exception ex) { Diagnostics.Log($"打开本地视频失败: {ex.GetType().Name} {ex.Message}"); }
+    }
+
+    // 影视仓式右上角实时时钟：yyyy年M月d日 HH:mm:ss
+    private void StartClock()
+    {
+        if (App.PlayerOnly) return;
+        void Tick()
+        {
+            var now = DateTime.Now;
+            ClockText.Text = $"{now.Year}年{now.Month}月{now.Day}日 {now:HH:mm:ss}";
+        }
+        Tick();
+        _clockTimer = DispatcherQueue.CreateTimer();
+        _clockTimer.Interval = TimeSpan.FromSeconds(1);
+        _clockTimer.Tick += (_, _) => Tick();
+        _clockTimer.Start();
     }
 
     internal void OpenSearch()
