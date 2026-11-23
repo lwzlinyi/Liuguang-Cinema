@@ -10,6 +10,7 @@
     <Page.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibility" />
         <local:StringToVisibilityConverter x:Key="StringToVisibility" />
+        <local:SourceTagBrushConverter x:Key="SourceTagBrush" />
         <Style x:Key="SearchRowContainer" TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -323,16 +324,15 @@
                                                           Foreground="{ThemeResource TertiaryTextBrush}"
                                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
                                                 <Image Source="{Binding Poster}" Stretch="UniformToFill" controls:PosterImage.AutoFit="True" />
-                                                <Border Visibility="{Binding Item.Remarks, Converter={StaticResource StringToVisibility}}"
-                                                        Background="#CC0B0D12"
-                                                        CornerRadius="{StaticResource RadiusControl}"
-                                                        Padding="8,3"
+                                                <!-- 影视仓式来源彩色角标 -->
+                                                <Border Visibility="{Binding SourceName, Converter={StaticResource StringToVisibility}}"
+                                                        Background="{Binding SourceName, Converter={StaticResource SourceTagBrush}}"
+                                                        CornerRadius="3" Padding="6,2"
                                                         HorizontalAlignment="Left" VerticalAlignment="Top"
-                                                        Margin="10">
-                                                    <TextBlock Text="{Binding Item.Remarks}"
-                                                               Style="{StaticResource MetaText}"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{ThemeResource PrimaryTextBrush}" />
+                                                        Margin="8">
+                                                    <TextBlock Text="{Binding SourceName}"
+                                                               FontSize="11" FontWeight="SemiBold"
+                                                               Foreground="#FFFFFF" MaxWidth="110" TextTrimming="CharacterEllipsis" />
                                                 </Border>
                                                 <Border Visibility="{Binding Rating, Converter={StaticResource StringToVisibility}}"
                                                         Background="#CC0B0D12"
