@@ -33,6 +33,34 @@
             <Setter Property="Padding" Value="20,0" />
             <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
         </Style>
+        <!-- 影视仓式四色胶囊操作按钮：蓝/绿/蓝/黄 -->
+        <Style x:Key="ActionBlueStyle" TargetType="Button" BasedOn="{StaticResource DetailActionButtonStyle}">
+            <Setter Property="Background" Value="#FF2196F3" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="CornerRadius" Value="17" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+        <Style x:Key="ActionGreenStyle" TargetType="Button" BasedOn="{StaticResource DetailActionButtonStyle}">
+            <Setter Property="Background" Value="#FF4CAF50" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="CornerRadius" Value="17" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+        </Style>
+        <Style x:Key="ActionYellowStyle" TargetType="Button" BasedOn="{StaticResource DetailActionButtonStyle}">
+            <Setter Property="Background" Value="#FFFFC107" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="CornerRadius" Value="17" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="Foreground" Value="#1A1A1A" />
+        </Style>
     </Page.Resources>
 
     <ScrollViewer x:Name="DetailScroller" VerticalScrollBarVisibility="Auto">
@@ -134,14 +162,14 @@
                                 </Button>
                                 <Button x:Name="FavoriteAction" Grid.Column="1"
                                         Command="{Binding ToggleFavoriteCommand}"
-                                        Style="{StaticResource DetailActionButtonStyle}"
+                                        Style="{StaticResource ActionGreenStyle}"
                                         AutomationProperties.Name="收藏">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <FontIcon Glyph="&#xE734;" FontSize="15" />
-                                        <TextBlock Text="{Binding IsFavorite, Converter={StaticResource FavoriteText}}" VerticalAlignment="Center" />
+                                        <FontIcon Glyph="&#xE734;" FontSize="15" Foreground="#FFFFFF" />
+                                        <TextBlock Text="{Binding IsFavorite, Converter={StaticResource FavoriteText}}" VerticalAlignment="Center" Foreground="#FFFFFF" />
                                     </StackPanel>
                                 </Button>
-                                <Button x:Name="DownloadAction" Grid.Column="2" Style="{StaticResource DetailActionButtonStyle}"
+                                <Button x:Name="DownloadAction" Grid.Column="2" Style="{StaticResource ActionBlueStyle}"
                                         AutomationProperties.Name="下载"
                                         ToolTipService.ToolTip="选择集数并另存为本地文件">
                                     <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpaceMini}">
@@ -149,7 +177,7 @@
                                                   Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}" />
                                         <ProgressRing Width="16" Height="16" IsActive="{Binding IsDownloading}"
                                                       Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibility}}" />
-                                        <TextBlock Text="下载" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
+                                        <TextBlock Text="下载" FontSize="13" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" />
                                     </StackPanel>
                                     <Button.Flyout>
                                         <Flyout Placement="BottomEdgeAlignedLeft">
@@ -186,13 +214,13 @@
                                     </Button.Flyout>
                                 </Button>
                                 <Button x:Name="CastAction" Grid.Column="3"
-                                        Style="{StaticResource DetailActionButtonStyle}"
+                                        Style="{StaticResource ActionYellowStyle}"
                                         Click="OnCastClick"
                                         ToolTipService.ToolTip="打开投屏页"
                                         AutomationProperties.Name="投屏">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <FontIcon Glyph="&#xEC15;" FontSize="15" />
-                                        <TextBlock Text="投屏" VerticalAlignment="Center" />
+                                        <FontIcon Glyph="&#xEC15;" FontSize="15" Foreground="#1A1A1A" />
+                                        <TextBlock Text="投屏" VerticalAlignment="Center" Foreground="#1A1A1A" />
                                     </StackPanel>
                                 </Button>
                             </Grid>
