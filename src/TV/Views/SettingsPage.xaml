@@ -776,7 +776,7 @@
                                         <Grid ColumnSpacing="{StaticResource SpaceSmall}">
                                             <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                                             <TextBox Text="{Binding DownloadFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     PlaceholderText="视频库\流光影院" AutomationProperties.Name="默认下载目录" />
+                                                     PlaceholderText="视频库\PCbox" AutomationProperties.Name="默认下载目录" />
                                             <Button Grid.Column="1" Content="浏览" Command="{Binding SelectDownloadFolderCommand}"
                                                     Style="{StaticResource SecondaryButtonStyle}" VerticalAlignment="Center" />
                                         </Grid>
@@ -902,14 +902,14 @@
                         <StackPanel x:Name="AboutPane" Spacing="16" Visibility="Collapsed">
                             <StackPanel Spacing="4">
                                 <TextBlock Text="关于" Style="{StaticResource SectionTitleText}" />
-                                <TextBlock Text="流光影院 · 深墨底与暖金流光的桌面影院。" Style="{StaticResource SecondaryText}" />
+                                <TextBlock Text="PCbox · 深墨底与暖金流光的桌面影院。" Style="{StaticResource SecondaryText}" />
                             </StackPanel>
                             <Border Style="{StaticResource SettingsCardStyle}">
                                 <StackPanel Spacing="6">
                                     <Grid MinHeight="{StaticResource SettingsRowMinHeight}" ColumnSpacing="{StaticResource SpaceLarge}">
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                         <TextBlock Text="应用名称" Style="{StaticResource LabelText}" Width="{StaticResource SettingsFormLabelWidth}" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Column="1" Text="流光影院" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1" Text="PCbox" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
                                     </Grid>
                                     <Border Height="1" Background="{ThemeResource DividerBrush}" />
                                     <Grid MinHeight="{StaticResource SettingsRowMinHeight}" ColumnSpacing="{StaticResource SpaceLarge}">

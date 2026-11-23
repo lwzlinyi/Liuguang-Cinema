@@ -203,9 +203,9 @@ public sealed class QuarkCloudProvider : ICloudDriveProvider
         var list = Property(Property(root.Json, "data"), "list");
         if (list.ValueKind == JsonValueKind.Array)
             foreach (var item in list.EnumerateArray())
-                if (String(item, "file_name") == "流光影院" && Bool(item, "dir") && String(item, "fid") is { Length: > 0 } folder)
+                if (String(item, "file_name") == "PCbox" && Bool(item, "dir") && String(item, "fid") is { Length: > 0 } folder)
                     return _saveDirIds[account] = folder;
-        var created = await SendAsync(HttpMethod.Post, _api + "file?" + ClientQuery, new { pdir_fid = "0", file_name = "流光影院", dir_path = "", dir_init_lock = false }, cookie, cancellationToken).ConfigureAwait(false);
+        var created = await SendAsync(HttpMethod.Post, _api + "file?" + ClientQuery, new { pdir_fid = "0", file_name = "PCbox", dir_path = "", dir_init_lock = false }, cookie, cancellationToken).ConfigureAwait(false);
         EnsureSuccess(created, "创建播放目录失败");
         return _saveDirIds[account] = NestedString(created.Json, "data", "fid") is { Length: > 0 } id ? id : throw new InvalidDataException("网盘未返回播放目录。");
     }

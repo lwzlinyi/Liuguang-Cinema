@@ -12,7 +12,7 @@ namespace TV.Services.Cloud;
 public sealed class BaiduCloudProvider : ICloudDriveProvider
 {
     private const string AppId = "250528";
-    private const string SaveDirectory = "/流光影院";
+    private const string SaveDirectory = "/PCbox";
     private readonly CloudHttpClient _http;
     private readonly Func<CancellationToken, Task<string>> _credential;
     private readonly DatabaseService _database;

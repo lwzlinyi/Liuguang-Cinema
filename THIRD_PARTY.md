@@ -1,6 +1,6 @@
 # 第三方代码、服务与许可说明
 
-流光影院不是上述项目的官方分支。本文记录源码复用和协议参考，不表示上游作者为本项目背书。
+PCbox不是上述项目的官方分支。本文记录源码复用和协议参考，不表示上游作者为本项目背书。
 
 ## 代码复用
 
@@ -20,7 +20,7 @@
 ## 公开配置与在线服务
 
 - 饭太硬公开 TVBox 配置由 `SourceConfigService.BuiltInEndpoints` 直接读取。应用实现缓存、主备刷新、配置合并、原生适配器和 Java 爬虫路由，不托管配置或视频内容。
-- 公开配置收录可参考 [gaotianliuyun/gao](https://github.com/gaotianliuyun/gao) 和 [cyao2q/files](https://github.com/cyao2q/files)。它们是第三方收录仓库，不是饭太硬或流光影院官方仓库。
+- 公开配置收录可参考 [gaotianliuyun/gao](https://github.com/gaotianliuyun/gao) 和 [cyao2q/files](https://github.com/cyao2q/files)。它们是第三方收录仓库，不是饭太硬或PCbox官方仓库。
 - 阿里、夸克、UC、百度网盘使用各自公开或官方账号/文件接口；账号凭据由用户在本地提供，服务条款由各服务方定义。
 - 哔哩哔哩账号、画质、节目匹配、弹幕和字幕使用 B 站接口。在线内容的可用性、权限与地域限制由原服务决定。
 - 弹弹play 开放弹幕网络（[doc.dandanplay.com/open](https://doc.dandanplay.com/open/)）用于在线弹幕匹配与拉取，遵循弹弹play 开放平台调用规范与鉴权协议。

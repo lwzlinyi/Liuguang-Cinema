@@ -60,7 +60,7 @@ public sealed partial class MainWindow : Window
         catch (Exception ex) { Diagnostics.Log($"标题栏高度定制不可用: {ex.GetType().Name}"); }
         RestorePlacement();
         AppWindow.Changed += (_, _) => CapturePlacement();
-        Title = "流光影院";
+        Title = "PCbox";
         Diagnostics.Log("MainWindow initialized");
         if (!App.PlayerOnly) App.Services.Sniffer.Attach(ShellRoot);
         ViewModel = new MainViewModel(App.Services, DispatcherQueue);

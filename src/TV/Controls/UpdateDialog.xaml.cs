@@ -18,7 +18,7 @@ public sealed partial class UpdateDialog : ContentDialog
         _updates = updates;
         InitializeComponent();
         VersionText.Text = $"{updates.CurrentVersion.ToString(3)} → {release.Version.ToString(3)}";
-        ReleaseTitleText.Text = string.IsNullOrWhiteSpace(release.Title) ? "流光影院 " + release.Version.ToString(3) : release.Title;
+        ReleaseTitleText.Text = string.IsNullOrWhiteSpace(release.Title) ? "PCbox " + release.Version.ToString(3) : release.Title;
         NotesText.Text = FormatNotes(release.Notes);
         try
         {

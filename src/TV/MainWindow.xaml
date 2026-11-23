@@ -24,15 +24,15 @@
                     <Border Width="28" Height="28" CornerRadius="8" VerticalAlignment="Center">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="#FFD68A" Offset="0" />
-                                <GradientStop Color="#E8A442" Offset="1" />
+                                <GradientStop Color="#4ADE80" Offset="0" />
+                                <GradientStop Color="#16A34A" Offset="1" />
                             </LinearGradientBrush>
                         </Border.Background>
                         <FontIcon Glyph="&#xE768;" FontSize="12" Margin="2,0,0,0"
                                   Foreground="{ThemeResource AccentInkBrush}"
                                   HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
-                    <TextBlock x:Name="BrandText" Text="流光影院" FontSize="{StaticResource FontSizeCardTitle}" FontWeight="SemiBold"
+                    <TextBlock x:Name="BrandText" Text="PCbox" FontSize="{StaticResource FontSizeCardTitle}" FontWeight="SemiBold"
                                FontFamily="{StaticResource DisplayFontFamily}" CharacterSpacing="20"
                                Foreground="{ThemeResource PrimaryTextBrush}" VerticalAlignment="Center" />
                 </StackPanel>

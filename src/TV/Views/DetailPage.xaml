@@ -18,7 +18,7 @@
         <!-- 详情页专用的版式尺寸（规格：封面 240×360） -->
         <x:Double x:Key="DetailCoverWidth">240</x:Double>
         <x:Double x:Key="DetailCoverHeight">360</x:Double>
-        <x:Double x:Key="EpisodePanelMaxHeight">430</x:Double>
+        <x:Double x:Key="EpisodePanelMaxHeight">400</x:Double>
         <x:Double x:Key="DetailActionWidth">118</x:Double>
         <Style x:Key="DetailActionButtonStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
             <Setter Property="MinWidth" Value="{StaticResource DetailActionWidth}" />
@@ -36,7 +36,7 @@
     </Page.Resources>
 
     <ScrollViewer x:Name="DetailScroller" VerticalScrollBarVisibility="Auto">
-        <StackPanel Padding="{StaticResource PagePaddingStandard}" Spacing="24">
+        <StackPanel Padding="{StaticResource PagePaddingStandard}" Spacing="14">
 
             <!-- 影院氛围主信息卡：海报环境光晕 + 封面 + 完整元数据胶囊 + 主操作 -->
             <Border x:Name="HeroBanner" CornerRadius="{StaticResource RadiusPanel}"
@@ -51,7 +51,7 @@
                     </Border>
                     <Rectangle Fill="{ThemeResource HeroScrimBrush}" IsHitTestVisible="False" />
 
-                    <Grid x:Name="HeroGrid" Padding="24" ColumnSpacing="{StaticResource SpaceXLarge}">
+                    <Grid x:Name="HeroGrid" Padding="14" ColumnSpacing="{StaticResource SpaceLarge}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="CoverColumn" Width="Auto" />
                             <ColumnDefinition x:Name="InfoColumn" Width="*" />
@@ -101,7 +101,7 @@
                             <!-- 简介：默认最多 6 行，可展开全文 -->
                             <StackPanel Spacing="{StaticResource SpaceMini}"
                                         Visibility="{Binding Detail.Description, Converter={StaticResource StringToVisibility}}">
-                                <TextBlock Text="简介" Style="{StaticResource LabelText}" Foreground="{ThemeResource SecondaryTextBrush}" />
+                                <TextBlock Text="内容简介" Style="{StaticResource LabelText}" Foreground="{ThemeResource SecondaryTextBrush}" />
                                 <TextBlock Text="{Binding Detail.Description}" Style="{StaticResource BodyText}"
                                            MaxLines="6" TextTrimming="CharacterEllipsis"
                                            Visibility="{Binding IsIntroExpanded, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}" />
@@ -114,7 +114,7 @@
                             </StackPanel>
 
                             <!-- 主操作「播放」最突出，收藏 / 下载 / 投屏为次操作 -->
-                            <Grid x:Name="ActionButtons" ColumnSpacing="12" RowSpacing="12" Margin="0,4,0,0">
+                            <Grid x:Name="ActionButtons" ColumnSpacing="8" RowSpacing="8" Margin="0,2,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" /><ColumnDefinition Width="Auto" />
@@ -205,7 +205,7 @@
             </Border>
 
             <!-- 来源与线路 / 选集（沉稳分层卡片） -->
-            <Grid x:Name="ContentColumns" ColumnSpacing="20">
+            <Grid x:Name="ContentColumns" ColumnSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="SourceColumn" Width="2*" />
                     <ColumnDefinition x:Name="EpisodeColumn" Width="3*" />
@@ -222,8 +222,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="来源与线路" Style="{StaticResource SectionTitleText}" VerticalAlignment="Center" />
-                            <Button Grid.Column="1" Content="查找换源" Style="{StaticResource SecondaryButtonStyle}"
+                            <TextBlock Text="快速搜索 / 线路" Style="{StaticResource SectionTitleText}" VerticalAlignment="Center" />
+                            <Button Grid.Column="1" Content="快速搜索" Style="{StaticResource SecondaryButtonStyle}"
                                     Command="{Binding FindSourcesCommand}"
                                     AutomationProperties.Name="查找换源" ToolTipService.ToolTip="搜索同名、同年份且包含播放线路的其他站点" />
                         </Grid>
@@ -300,7 +300,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="选集" Style="{StaticResource SectionTitleText}" VerticalAlignment="Center" />
-                            <TextBox Grid.Column="1" Width="176" MinHeight="38" Padding="12,8"
+                            <TextBox Grid.Column="1" Width="140" MinHeight="32" Padding="8,5"
                                      PlaceholderText="搜索集数" AutomationProperties.Name="搜索集数"
                                      Text="{Binding EpisodeFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
@@ -317,8 +317,10 @@
                                             Tag="{Binding}"
                                             Click="OnPlayEpisodeClick"
                                             Style="{StaticResource SecondaryButtonStyle}"
-                                            MinWidth="68"
-                                            Margin="0,0,8,8" />
+                                            MinWidth="46" MinHeight="30" Height="30"
+                                            Padding="8,0" FontSize="{StaticResource FontSizeMeta}"
+                                            CornerRadius="4"
+                                            Margin="0,0,6,6" />
                                 </DataTemplate>
                             </GridView.ItemTemplate>
                         </GridView>

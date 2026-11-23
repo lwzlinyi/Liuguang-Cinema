@@ -1,7 +1,7 @@
 <!--
-    流光影院 · 设计令牌
-    视觉方向：「深墨底 + 暖金流光」。内容优先，克制装饰：
-    大量留白、大字号、暖金只用在高频操作与当前选中态上。
+    PCbox · 设计令牌
+    视觉方向：「影视仓 · 纯黑底 + 青绿高亮」。内容优先、高密度、强对比：
+    紧凑网格、小字号、青绿只用在选中态与高频操作上。
     所有颜色、字号、间距、控件尺寸都从这里取，页面里禁止另写数字。
 -->
 <ResourceDictionary
@@ -14,18 +14,18 @@
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
             <!-- 表面 -->
-            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#090B10" />
-            <SolidColorBrush x:Key="SurfaceBrush" Color="#11151E" />
-            <SolidColorBrush x:Key="SurfaceAltBrush" Color="#171C27" />
-            <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#1F2533" />
-            <SolidColorBrush x:Key="SurfaceElevatedBrush" Color="#1C2230" />
-            <SolidColorBrush x:Key="PosterPlaceholderBrush" Color="#161B25" />
-            <SolidColorBrush x:Key="ScrimBrush" Color="#DF06080D" />
-            <SolidColorBrush x:Key="DividerBrush" Color="#17FFFFFF" />
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#0A0A0C" />
+            <SolidColorBrush x:Key="SurfaceBrush" Color="#121317" />
+            <SolidColorBrush x:Key="SurfaceAltBrush" Color="#1A1B20" />
+            <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#24252B" />
+            <SolidColorBrush x:Key="SurfaceElevatedBrush" Color="#1E1F25" />
+            <SolidColorBrush x:Key="PosterPlaceholderBrush" Color="#1A1B20" />
+            <SolidColorBrush x:Key="ScrimBrush" Color="#DF000000" />
+            <SolidColorBrush x:Key="DividerBrush" Color="#14FFFFFF" />
             <LinearGradientBrush x:Key="HeroScrimBrush" StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#C411151E" Offset="0" />
-                <GradientStop Color="#E611151E" Offset="0.52" />
-                <GradientStop Color="#FA11151E" Offset="1" />
+                <GradientStop Color="#C4000000" Offset="0" />
+                <GradientStop Color="#E6000000" Offset="0.52" />
+                <GradientStop Color="#FA000000" Offset="1" />
             </LinearGradientBrush>
 
             <!-- 文本 -->
@@ -37,39 +37,39 @@
             <!-- 边框 -->
             <SolidColorBrush x:Key="SubtleBorderBrush" Color="#1CFFFFFF" />
             <SolidColorBrush x:Key="StrongBorderBrush" Color="#36FFFFFF" />
-            <SolidColorBrush x:Key="AccentBorderBrush" Color="#59F4BE64" />
+            <SolidColorBrush x:Key="AccentBorderBrush" Color="#6622C55E" />
 
             <!-- 暖金强调 -->
-            <SolidColorBrush x:Key="AccentBrush" Color="#F4BE64" />
-            <SolidColorBrush x:Key="AccentFillBrush" Color="#F4BE64" />
-            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#FFCE7D" />
-            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#D9A048" />
-            <SolidColorBrush x:Key="AccentInkBrush" Color="#1B1206" />
-            <SolidColorBrush x:Key="AccentSoftBrush" Color="#29F4BE64" />
-            <SolidColorBrush x:Key="SelectionBrush" Color="#24F4BE64" />
-            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#F4BE64" />
+            <SolidColorBrush x:Key="AccentBrush" Color="#22C55E" />
+            <SolidColorBrush x:Key="AccentFillBrush" Color="#22C55E" />
+            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#34D675" />
+            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#16A34A" />
+            <SolidColorBrush x:Key="AccentInkBrush" Color="#04220F" />
+            <SolidColorBrush x:Key="AccentSoftBrush" Color="#2222C55E" />
+            <SolidColorBrush x:Key="SelectionBrush" Color="#1F22C55E" />
+            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#22C55E" />
 
             <!-- 状态 -->
             <SolidColorBrush x:Key="DangerBrush" Color="#FF7A72" />
             <SolidColorBrush x:Key="DangerSoftBrush" Color="#2EFF7A72" />
             <SolidColorBrush x:Key="SuccessBrush" Color="#63D6A4" />
-            <SolidColorBrush x:Key="RatingBrush" Color="#F5C671" />
+            <SolidColorBrush x:Key="RatingBrush" Color="#FFD54A" />
             <SolidColorBrush x:Key="NavHoverBrush" Color="#14FFFFFF" />
 
             <!-- 兼容旧键 -->
             <SolidColorBrush x:Key="GlassBrush" Color="#13161D" />
             <SolidColorBrush x:Key="CardBrush" Color="#191D26" />
             <SolidColorBrush x:Key="PillIdleBrush" Color="#171B24" />
-            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#1D1408" />
+            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#04220F" />
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F7F4EF" />
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F5F6F7" />
             <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F0EBE3" />
+            <SolidColorBrush x:Key="SurfaceAltBrush" Color="#ECEEF0" />
             <SolidColorBrush x:Key="SurfaceHoverBrush" Color="#E9E3D9" />
             <SolidColorBrush x:Key="SurfaceElevatedBrush" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="PosterPlaceholderBrush" Color="#E8E2D8" />
+            <SolidColorBrush x:Key="PosterPlaceholderBrush" Color="#E6E7E9" />
             <SolidColorBrush x:Key="ScrimBrush" Color="#D9F5F1E9" />
             <SolidColorBrush x:Key="DividerBrush" Color="#14000000" />
             <LinearGradientBrush x:Key="HeroScrimBrush" StartPoint="0,0" EndPoint="1,1">
@@ -85,27 +85,27 @@
 
             <SolidColorBrush x:Key="SubtleBorderBrush" Color="#14000000" />
             <SolidColorBrush x:Key="StrongBorderBrush" Color="#26000000" />
-            <SolidColorBrush x:Key="AccentBorderBrush" Color="#59C98419" />
+            <SolidColorBrush x:Key="AccentBorderBrush" Color="#5922C55E" />
 
-            <SolidColorBrush x:Key="AccentBrush" Color="#8A5A12" />
-            <SolidColorBrush x:Key="AccentFillBrush" Color="#F2B75C" />
-            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#FFC978" />
-            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#D69C45" />
-            <SolidColorBrush x:Key="AccentInkBrush" Color="#1D1408" />
-            <SolidColorBrush x:Key="AccentSoftBrush" Color="#26C98419" />
-            <SolidColorBrush x:Key="SelectionBrush" Color="#26C98419" />
-            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#D98F2B" />
+            <SolidColorBrush x:Key="AccentBrush" Color="#15803D" />
+            <SolidColorBrush x:Key="AccentFillBrush" Color="#22C55E" />
+            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#34D675" />
+            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#16A34A" />
+            <SolidColorBrush x:Key="AccentInkBrush" Color="#04220F" />
+            <SolidColorBrush x:Key="AccentSoftBrush" Color="#2622C55E" />
+            <SolidColorBrush x:Key="SelectionBrush" Color="#2622C55E" />
+            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#16A34A" />
 
             <SolidColorBrush x:Key="DangerBrush" Color="#B42318" />
             <SolidColorBrush x:Key="DangerSoftBrush" Color="#1FB42318" />
             <SolidColorBrush x:Key="SuccessBrush" Color="#1E7A52" />
-            <SolidColorBrush x:Key="RatingBrush" Color="#9A6500" />
+            <SolidColorBrush x:Key="RatingBrush" Color="#B45309" />
             <SolidColorBrush x:Key="NavHoverBrush" Color="#0F000000" />
 
             <SolidColorBrush x:Key="GlassBrush" Color="#FFFFFF" />
-            <SolidColorBrush x:Key="CardBrush" Color="#F0EBE3" />
-            <SolidColorBrush x:Key="PillIdleBrush" Color="#EDE7DE" />
-            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#1D1408" />
+            <SolidColorBrush x:Key="CardBrush" Color="#ECEEF0" />
+            <SolidColorBrush x:Key="PillIdleBrush" Color="#E8EAED" />
+            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#04220F" />
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
@@ -151,13 +151,13 @@
     </ResourceDictionary.ThemeDictionaries>
 
     <!-- 系统强调色：暖金。默认控件的 Focus/Hover/Accent 都从这里派生。 -->
-    <Color x:Key="SystemAccentColor">#FFF2B75C</Color>
-    <Color x:Key="SystemAccentColorLight1">#FFFFC978</Color>
-    <Color x:Key="SystemAccentColorLight2">#FFFFD79A</Color>
-    <Color x:Key="SystemAccentColorLight3">#FFFFE6BE</Color>
-    <Color x:Key="SystemAccentColorDark1">#FFD69C45</Color>
-    <Color x:Key="SystemAccentColorDark2">#FFB87F2C</Color>
-    <Color x:Key="SystemAccentColorDark3">#FF96621A</Color>
+    <Color x:Key="SystemAccentColor">#FF22C55E</Color>
+    <Color x:Key="SystemAccentColorLight1">#FF34D675</Color>
+    <Color x:Key="SystemAccentColorLight2">#FF6EE7A0</Color>
+    <Color x:Key="SystemAccentColorLight3">#FFA7F0C4</Color>
+    <Color x:Key="SystemAccentColorDark1">#FF16A34A</Color>
+    <Color x:Key="SystemAccentColorDark2">#FF128040</Color>
+    <Color x:Key="SystemAccentColorDark3">#FF0B5C2C</Color>
 
     <!-- ============================================================
          2. 字体
@@ -166,76 +166,76 @@
     <FontFamily x:Key="BodyFontFamily">Segoe UI Variable Text, Microsoft YaHei UI, Segoe UI</FontFamily>
 
     <!-- 字阶（px） -->
-    <x:Double x:Key="FontSizeHero">34</x:Double>
-    <x:Double x:Key="FontSizePageTitle">30</x:Double>
-    <x:Double x:Key="FontSizeSection">21</x:Double>
-    <x:Double x:Key="FontSizeCardTitle">16</x:Double>
-    <x:Double x:Key="FontSizeBody">15</x:Double>
-    <x:Double x:Key="FontSizeSecondary">14</x:Double>
-    <x:Double x:Key="FontSizeMeta">13</x:Double>
+    <x:Double x:Key="FontSizeHero">26</x:Double>
+    <x:Double x:Key="FontSizePageTitle">22</x:Double>
+    <x:Double x:Key="FontSizeSection">17</x:Double>
+    <x:Double x:Key="FontSizeCardTitle">13</x:Double>
+    <x:Double x:Key="FontSizeBody">13</x:Double>
+    <x:Double x:Key="FontSizeSecondary">12</x:Double>
+    <x:Double x:Key="FontSizeMeta">11</x:Double>
 
     <!-- 行高 -->
-    <x:Double x:Key="LineHeightHero">42</x:Double>
-    <x:Double x:Key="LineHeightPageTitle">38</x:Double>
-    <x:Double x:Key="LineHeightSection">28</x:Double>
-    <x:Double x:Key="LineHeightCardTitle">22</x:Double>
-    <x:Double x:Key="LineHeightBody">22</x:Double>
-    <x:Double x:Key="LineHeightSecondary">20</x:Double>
-    <x:Double x:Key="LineHeightMeta">18</x:Double>
+    <x:Double x:Key="LineHeightHero">33</x:Double>
+    <x:Double x:Key="LineHeightPageTitle">29</x:Double>
+    <x:Double x:Key="LineHeightSection">23</x:Double>
+    <x:Double x:Key="LineHeightCardTitle">18</x:Double>
+    <x:Double x:Key="LineHeightBody">19</x:Double>
+    <x:Double x:Key="LineHeightSecondary">17</x:Double>
+    <x:Double x:Key="LineHeightMeta">15</x:Double>
 
     <!-- ============================================================
          3. 间距（4px 网格）
          ============================================================ -->
-    <x:Double x:Key="SpaceTiny">4</x:Double>
-    <x:Double x:Key="SpaceMini">8</x:Double>
-    <x:Double x:Key="SpaceSmall">12</x:Double>
-    <x:Double x:Key="SpaceMedium">16</x:Double>
-    <x:Double x:Key="SpaceLarge">24</x:Double>
-    <x:Double x:Key="SpaceXLarge">32</x:Double>
-    <x:Double x:Key="SpaceHuge">48</x:Double>
+    <x:Double x:Key="SpaceTiny">3</x:Double>
+    <x:Double x:Key="SpaceMini">6</x:Double>
+    <x:Double x:Key="SpaceSmall">9</x:Double>
+    <x:Double x:Key="SpaceMedium">12</x:Double>
+    <x:Double x:Key="SpaceLarge">18</x:Double>
+    <x:Double x:Key="SpaceXLarge">24</x:Double>
+    <x:Double x:Key="SpaceHuge">36</x:Double>
 
     <!-- 页面外边距：标题栏已提供顶部留白，页面上边距克制收紧以让内容区首屏更饱满 -->
-    <Thickness x:Key="PagePaddingWide">32,10,32,28</Thickness>
-    <Thickness x:Key="PagePaddingStandard">24,10,24,24</Thickness>
-    <Thickness x:Key="PagePaddingNarrow">16,8,16,20</Thickness>
-    <Thickness x:Key="SectionGap">0,0,0,28</Thickness>
-    <Thickness x:Key="GroupGap">0,0,0,16</Thickness>
+    <Thickness x:Key="PagePaddingWide">18,6,18,18</Thickness>
+    <Thickness x:Key="PagePaddingStandard">14,6,14,16</Thickness>
+    <Thickness x:Key="PagePaddingNarrow">10,6,10,14</Thickness>
+    <Thickness x:Key="SectionGap">0,0,0,16</Thickness>
+    <Thickness x:Key="GroupGap">0,0,0,10</Thickness>
     <Thickness x:Key="CardPadding">20</Thickness>
     <Thickness x:Key="ControlPaddingHorizontal">16,0</Thickness>
 
     <!-- ============================================================
          4. 控件尺寸与圆角
          ============================================================ -->
-    <x:Double x:Key="NavItemHeight">48</x:Double>
-    <x:Double x:Key="PrimaryButtonHeight">44</x:Double>
-    <x:Double x:Key="SecondaryButtonHeight">40</x:Double>
-    <x:Double x:Key="IconButtonSize">40</x:Double>
-    <x:Double x:Key="InputHeight">44</x:Double>
-    <x:Double x:Key="MenuItemHeight">40</x:Double>
-    <x:Double x:Key="ListRowHeight">48</x:Double>
+    <x:Double x:Key="NavItemHeight">40</x:Double>
+    <x:Double x:Key="PrimaryButtonHeight">36</x:Double>
+    <x:Double x:Key="SecondaryButtonHeight">32</x:Double>
+    <x:Double x:Key="IconButtonSize">34</x:Double>
+    <x:Double x:Key="InputHeight">36</x:Double>
+    <x:Double x:Key="MenuItemHeight">34</x:Double>
+    <x:Double x:Key="ListRowHeight">40</x:Double>
 
     <!-- 圆角规范（4px 网格派生）：微观件 4 / 控件 8 / 标签胶囊 10 / 卡片 12 / 大面板 16 / 圆形 999 -->
-    <CornerRadius x:Key="RadiusTag">4</CornerRadius>
-    <CornerRadius x:Key="RadiusControl">8</CornerRadius>
-    <CornerRadius x:Key="RadiusChip">10</CornerRadius>
-    <CornerRadius x:Key="RadiusCard">12</CornerRadius>
-    <CornerRadius x:Key="RadiusPanel">16</CornerRadius>
+    <CornerRadius x:Key="RadiusTag">2</CornerRadius>
+    <CornerRadius x:Key="RadiusControl">4</CornerRadius>
+    <CornerRadius x:Key="RadiusChip">6</CornerRadius>
+    <CornerRadius x:Key="RadiusCard">6</CornerRadius>
+    <CornerRadius x:Key="RadiusPanel">10</CornerRadius>
     <CornerRadius x:Key="RadiusPill">999</CornerRadius>
-    <x:Double x:Key="CardRadius">12</x:Double>
+    <x:Double x:Key="CardRadius">6</x:Double>
 
     <!-- 海报 -->
-    <x:Double x:Key="PosterWidth">188</x:Double>
-    <x:Double x:Key="PosterHeight">282</x:Double>
-    <x:Double x:Key="PosterWidthCompact">168</x:Double>
-    <x:Double x:Key="PosterHeightCompact">252</x:Double>
-    <x:Double x:Key="PosterColumnGap">18</x:Double>
-    <x:Double x:Key="PosterRowGap">22</x:Double>
+    <x:Double x:Key="PosterWidth">150</x:Double>
+    <x:Double x:Key="PosterHeight">225</x:Double>
+    <x:Double x:Key="PosterWidthCompact">140</x:Double>
+    <x:Double x:Key="PosterHeightCompact">210</x:Double>
+    <x:Double x:Key="PosterColumnGap">10</x:Double>
+    <x:Double x:Key="PosterRowGap">12</x:Double>
     <x:Double x:Key="PosterMaxWidth">720</x:Double>
 
     <!-- 侧栏 -->
     <x:Double x:Key="NavPaneWidth">196</x:Double>
     <x:Double x:Key="NavPaneCompactWidth">76</x:Double>
-    <x:Double x:Key="TitleBarHeight">48</x:Double>
+    <x:Double x:Key="TitleBarHeight">40</x:Double>
 
     <!-- 正文可读宽度上限 -->
     <x:Double x:Key="ReadableMaxWidth">840</x:Double>

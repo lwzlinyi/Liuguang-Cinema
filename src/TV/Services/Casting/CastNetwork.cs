@@ -40,7 +40,7 @@ internal sealed class CastNetwork : IAsyncDisposable
         var adapter = FindLocalNetwork();
         _address = adapter.Address;
         _mask = adapter.IPv4Mask.GetAddressBytes();
-        DeviceName = $"流光影院 · {Environment.MachineName}";
+        DeviceName = $"PCbox · {Environment.MachineName}";
         _directory = Path.Combine(AppPaths.Root, "cache", "cast-" + Guid.NewGuid().ToString("N"));
         var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions
         {
@@ -256,10 +256,10 @@ internal sealed class CastNetwork : IAsyncDisposable
 
     private const string SenderPage = """
         <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="color-scheme" content="light dark"><title>投屏 · 流光影院</title><style>
+        <meta name="color-scheme" content="light dark"><title>投屏 · PCbox</title><style>
         body{font:16px system-ui,sans-serif;margin:0}main{max-width:30rem;margin:12vh auto;padding:0 24px}h1{font-size:2rem;margin-bottom:2rem}
         input,button,progress{box-sizing:border-box;width:100%;margin-top:12px}button{font:inherit;font-weight:650;padding:14px;border:0;border-radius:10px;color:white;background:#3054b9}button:disabled{opacity:.6}input{font:inherit}
-        </style></head><body><main><h1>投屏到流光影院</h1><input id="video" aria-label="选择视频" type="file" accept="video/*,.mkv,.avi"><button id="send" disabled>发送视频</button>
+        </style></head><body><main><h1>投屏到PCbox</h1><input id="video" aria-label="选择视频" type="file" accept="video/*,.mkv,.avi"><button id="send" disabled>发送视频</button>
         <progress id="progress" max="100" value="0" hidden></progress><p id="status" role="status"></p></main><script>
         const files=document.querySelector('#video'), send=document.querySelector('#send'), status=document.querySelector('#status'), bar=document.querySelector('#progress');
         files.onchange=()=>{send.disabled=!files.files.length;status.textContent='';bar.hidden=true;};

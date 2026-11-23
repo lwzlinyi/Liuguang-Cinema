@@ -15,8 +15,8 @@
     <ApplicationIcon>Assets\App.ico</ApplicationIcon>
     <RootNamespace>TV</RootNamespace>
     <AssemblyName>TV</AssemblyName>
-    <AssemblyTitle>流光影院</AssemblyTitle>
-    <Description>流光影院 · Windows 原生桌面影院播放器</Description>
+    <AssemblyTitle>PCbox</AssemblyTitle>
+    <Description>PCbox · Windows 原生桌面影院播放器</Description>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PublishTrimmed>false</PublishTrimmed>
     <PublishSingleFile>false</PublishSingleFile>

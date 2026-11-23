@@ -187,7 +187,7 @@ internal sealed class WindowTray : IDisposable
         uint command;
         try
         {
-            AppendMenu(menu, 0, OpenItem, "打开流光影院");
+            AppendMenu(menu, 0, OpenItem, "打开PCbox");
             AppendMenu(menu, 0, ExitItem, "退出");
             SetMenuDefaultItem(menu, OpenItem, false);
             SetForegroundWindow(_window);

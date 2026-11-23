@@ -32,13 +32,13 @@
 
         <!-- 页头：主标题 + 副信息（同一条 32px 左缘基线） -->
         <StackPanel Spacing="{StaticResource SpaceTiny}">
-            <TextBlock Text="搜索" Style="{StaticResource PageTitleText}" />
+            <TextBlock Text="搜索" Style="{StaticResource SectionTitleText}" FontWeight="Bold" />
             <TextBlock Text="跨站点查找片名、年份或类型，逐站显示进度与结果"
                        Style="{StaticResource SecondaryText}" />
         </StackPanel>
 
         <!-- 搜索输入：44 高输入框 + 44 高主按钮，垂直中心对齐；回车或点按才提交 -->
-        <Grid Grid.Row="1" Margin="0,24,0,24" ColumnSpacing="{StaticResource SpaceMini}">
+        <Grid Grid.Row="1" Margin="0,12,0,12" ColumnSpacing="{StaticResource SpaceMini}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -74,7 +74,7 @@
              两列共用同一行页头（标题行高由 40 高的次按钮决定），列间距 24、页头与内容间距 12。 -->
         <Grid Grid.Row="2"
               ColumnSpacing="{StaticResource SpaceLarge}"
-              RowSpacing="{StaticResource SpaceSmall}">
+              RowSpacing="{StaticResource SpaceTiny}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -84,7 +84,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Width="212"
+            <Grid Width="176"
                   Padding="12,0"
                   ColumnSpacing="{StaticResource SpaceMini}" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -97,7 +97,7 @@
             </Grid>
 
             <!-- 右列头：历史态（搜索历史 + 清空）/ 结果态（结果标题），筛选始终在最右侧与结果区右缘同一条竖线 -->
-            <Grid Grid.Column="1" ColumnSpacing="{StaticResource SpaceSmall}">
+            <Grid Grid.Column="1" ColumnSpacing="{StaticResource SpaceTiny}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -130,7 +130,7 @@
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout Placement="BottomEdgeAlignedRight">
-                            <StackPanel Spacing="{StaticResource SpaceSmall}" Width="240">
+                            <StackPanel Spacing="{StaticResource SpaceTiny}" Width="240">
                                 <controls:AnchoredChoice Header="类型" ItemsSource="{Binding Types}"
                                                          SelectedItem="{Binding SelectedType, Mode=TwoWay}"
                                                          HorizontalAlignment="Stretch" />
@@ -221,7 +221,7 @@
                                         BorderThickness="0"
                                         Padding="0"
                                         MinHeight="{StaticResource ListRowHeight}">
-                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpaceSmall}">
+                                    <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpaceTiny}">
                                         <FontIcon Glyph="&#xE81C;" FontSize="16"
                                                   Foreground="{ThemeResource TertiaryTextBrush}" />
                                         <TextBlock Text="{Binding}" Style="{StaticResource BodyText}"
@@ -241,7 +241,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <StackPanel Spacing="{StaticResource SpaceSmall}"
+                <StackPanel Spacing="{StaticResource SpaceTiny}"
                             HorizontalAlignment="Center" VerticalAlignment="Center"
                             MaxWidth="{StaticResource TextParagraphMaxWidth}"
                             Visibility="{Binding HasHistory, Converter={StaticResource BoolToVisibility}, ConverterParameter=Inverse}">
@@ -366,7 +366,7 @@
 
                     <StackPanel x:Name="LoadingState"
                                 Visibility="Collapsed"
-                                Spacing="{StaticResource SpaceSmall}"
+                                Spacing="{StaticResource SpaceTiny}"
                                 MaxWidth="{StaticResource TextParagraphMaxWidth}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                         <ProgressRing Width="40" Height="40" IsActive="True"
@@ -381,7 +381,7 @@
 
                     <StackPanel x:Name="EmptyState"
                                 Visibility="Collapsed"
-                                Spacing="{StaticResource SpaceSmall}"
+                                Spacing="{StaticResource SpaceTiny}"
                                 MaxWidth="{StaticResource TextParagraphMaxWidth}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center">
                         <FontIcon x:Name="EmptyIcon" Glyph="&#xE721;" FontSize="40"
