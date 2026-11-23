@@ -10,6 +10,7 @@
     <Page.Resources>
         <local:BoolToVisibilityConverter x:Key="BoolToVisibility" />
         <local:StringToVisibilityConverter x:Key="StringToVisibility" />
+        <local:SourceTagBrushConverter x:Key="SourceTagBrush" />
     </Page.Resources>
 
     <Grid Padding="{StaticResource PagePaddingWide}">
@@ -249,12 +250,13 @@
                                                 </LinearGradientBrush>
                                             </Rectangle.Fill>
                                         </Rectangle>
+                                        <!-- 影视仓式来源彩色角标 -->
                                         <Border Visibility="{Binding Item.Remarks, Converter={StaticResource StringToVisibility}}"
-                                                Background="#D6090B10" BorderBrush="#26FFFFFF" BorderThickness="1"
-                                                CornerRadius="4" Padding="5,2"
-                                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="9">
+                                                Background="{Binding Item.SiteName, Converter={StaticResource SourceTagBrush}}"
+                                                CornerRadius="3" Padding="5,2"
+                                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
                                             <TextBlock Text="{Binding Item.Remarks}" FontSize="{StaticResource FontSizeMeta}"
-                                                       FontWeight="SemiBold" Foreground="#FFF5F2EC" MaxWidth="86" TextTrimming="CharacterEllipsis" />
+                                                       FontWeight="SemiBold" Foreground="#FFFFFF" MaxWidth="86" TextTrimming="CharacterEllipsis" />
                                         </Border>
                                         <Border Visibility="{Binding Rating, Converter={StaticResource StringToVisibility}}"
                                                 Background="#D6090B10" BorderBrush="#26FFFFFF" BorderThickness="1"
