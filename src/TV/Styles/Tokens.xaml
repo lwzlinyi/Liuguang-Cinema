@@ -1,7 +1,7 @@
 <!--
     PCbox · 设计令牌
-    视觉方向：「影视仓 · 纯黑底 + 青绿高亮」。内容优先、高密度、强对比：
-    紧凑网格、小字号、青绿只用在选中态与高频操作上。
+    视觉方向：「影视仓 · 纯黑底 + 影视仓蓝高亮」。内容优先、高密度、强对比：
+    紧凑网格、小字号、蓝色只用在选中态与高频操作上。
     所有颜色、字号、间距、控件尺寸都从这里取，页面里禁止另写数字。
 -->
 <ResourceDictionary
@@ -37,17 +37,17 @@
             <!-- 边框 -->
             <SolidColorBrush x:Key="SubtleBorderBrush" Color="#1CFFFFFF" />
             <SolidColorBrush x:Key="StrongBorderBrush" Color="#36FFFFFF" />
-            <SolidColorBrush x:Key="AccentBorderBrush" Color="#6622C55E" />
+            <SolidColorBrush x:Key="AccentBorderBrush" Color="#662196F3" />
 
-            <!-- 暖金强调 -->
-            <SolidColorBrush x:Key="AccentBrush" Color="#22C55E" />
-            <SolidColorBrush x:Key="AccentFillBrush" Color="#22C55E" />
-            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#34D675" />
-            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#16A34A" />
-            <SolidColorBrush x:Key="AccentInkBrush" Color="#04220F" />
-            <SolidColorBrush x:Key="AccentSoftBrush" Color="#2222C55E" />
-            <SolidColorBrush x:Key="SelectionBrush" Color="#1F22C55E" />
-            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#22C55E" />
+            <!-- 影视仓蓝强调 -->
+            <SolidColorBrush x:Key="AccentBrush" Color="#2196F3" />
+            <SolidColorBrush x:Key="AccentFillBrush" Color="#2196F3" />
+            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#42A5F5" />
+            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#1976D2" />
+            <SolidColorBrush x:Key="AccentInkBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="AccentSoftBrush" Color="#222196F3" />
+            <SolidColorBrush x:Key="SelectionBrush" Color="#1F2196F3" />
+            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#2196F3" />
 
             <!-- 状态 -->
             <SolidColorBrush x:Key="DangerBrush" Color="#FF7A72" />
@@ -60,7 +60,7 @@
             <SolidColorBrush x:Key="GlassBrush" Color="#13161D" />
             <SolidColorBrush x:Key="CardBrush" Color="#191D26" />
             <SolidColorBrush x:Key="PillIdleBrush" Color="#171B24" />
-            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#04220F" />
+            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#FFFFFF" />
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Light">
@@ -85,16 +85,16 @@
 
             <SolidColorBrush x:Key="SubtleBorderBrush" Color="#14000000" />
             <SolidColorBrush x:Key="StrongBorderBrush" Color="#26000000" />
-            <SolidColorBrush x:Key="AccentBorderBrush" Color="#5922C55E" />
+            <SolidColorBrush x:Key="AccentBorderBrush" Color="#592196F3" />
 
-            <SolidColorBrush x:Key="AccentBrush" Color="#15803D" />
-            <SolidColorBrush x:Key="AccentFillBrush" Color="#22C55E" />
-            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#34D675" />
-            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#16A34A" />
-            <SolidColorBrush x:Key="AccentInkBrush" Color="#04220F" />
-            <SolidColorBrush x:Key="AccentSoftBrush" Color="#2622C55E" />
-            <SolidColorBrush x:Key="SelectionBrush" Color="#2622C55E" />
-            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#16A34A" />
+            <SolidColorBrush x:Key="AccentBrush" Color="#1565C0" />
+            <SolidColorBrush x:Key="AccentFillBrush" Color="#2196F3" />
+            <SolidColorBrush x:Key="AccentFillHoverBrush" Color="#42A5F5" />
+            <SolidColorBrush x:Key="AccentFillPressedBrush" Color="#1976D2" />
+            <SolidColorBrush x:Key="AccentInkBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="AccentSoftBrush" Color="#262196F3" />
+            <SolidColorBrush x:Key="SelectionBrush" Color="#262196F3" />
+            <SolidColorBrush x:Key="SelectionIndicatorBrush" Color="#1976D2" />
 
             <SolidColorBrush x:Key="DangerBrush" Color="#B42318" />
             <SolidColorBrush x:Key="DangerSoftBrush" Color="#1FB42318" />
@@ -105,7 +105,7 @@
             <SolidColorBrush x:Key="GlassBrush" Color="#FFFFFF" />
             <SolidColorBrush x:Key="CardBrush" Color="#ECEEF0" />
             <SolidColorBrush x:Key="PillIdleBrush" Color="#E8EAED" />
-            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#04220F" />
+            <SolidColorBrush x:Key="PillActiveInkBrush" Color="#FFFFFF" />
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
@@ -150,14 +150,14 @@
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
-    <!-- 系统强调色：暖金。默认控件的 Focus/Hover/Accent 都从这里派生。 -->
-    <Color x:Key="SystemAccentColor">#FF22C55E</Color>
-    <Color x:Key="SystemAccentColorLight1">#FF34D675</Color>
-    <Color x:Key="SystemAccentColorLight2">#FF6EE7A0</Color>
-    <Color x:Key="SystemAccentColorLight3">#FFA7F0C4</Color>
-    <Color x:Key="SystemAccentColorDark1">#FF16A34A</Color>
-    <Color x:Key="SystemAccentColorDark2">#FF128040</Color>
-    <Color x:Key="SystemAccentColorDark3">#FF0B5C2C</Color>
+    <!-- 系统强调色：影视仓蓝。默认控件的 Focus/Hover/Accent 都从这里派生。 -->
+    <Color x:Key="SystemAccentColor">#FF2196F3</Color>
+    <Color x:Key="SystemAccentColorLight1">#FF42A5F5</Color>
+    <Color x:Key="SystemAccentColorLight2">#FF64B5F6</Color>
+    <Color x:Key="SystemAccentColorLight3">#FF90CAF9</Color>
+    <Color x:Key="SystemAccentColorDark1">#FF1976D2</Color>
+    <Color x:Key="SystemAccentColorDark2">#FF1565C0</Color>
+    <Color x:Key="SystemAccentColorDark3">#FF0D47A1</Color>
 
     <!-- ============================================================
          2. 字体
