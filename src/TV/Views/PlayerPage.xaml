@@ -34,7 +34,7 @@
             <GradientStop Color="#E607090E" Offset="1" />
         </LinearGradientBrush>
 
-        <!-- 中央播放/暂停大按钮：暖金主操作 -->
+        <!-- 中央播放/暂停大按钮：影视仓蓝主操作 -->
         <Style x:Key="PlayerCenterPlayButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayerIconButtonStyle}">
             <Setter Property="Width" Value="{StaticResource PlayerCenterButtonSize}" />
             <Setter Property="Height" Value="{StaticResource PlayerCenterButtonSize}" />
