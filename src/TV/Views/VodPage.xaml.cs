@@ -68,12 +68,12 @@ public sealed partial class VodPage : Page
                 HorizontalContentAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 MinHeight = 44,
-                Padding = new Thickness(10, 8),
+                Padding = new Thickness(10, 8, 10, 8),
                 CornerRadius = new CornerRadius(8),
                 Background = isSelected ? selectedBrush : idleBrush,
-                Foreground = isSelected ? selectedInk : idleInk,
-                ToolTipService.ToolTip = site.DisplayName
+                Foreground = isSelected ? selectedInk : idleInk
             };
+            ToolTipService.SetToolTip(button, site.DisplayName);
             button.Click += (_, _) =>
             {
                 // 触发 OnSelectedSiteChanged：保存 homeSite 并重新加载该站点首页。
