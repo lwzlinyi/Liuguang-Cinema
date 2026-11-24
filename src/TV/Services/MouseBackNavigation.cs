@@ -45,7 +45,7 @@ internal sealed class MouseBackNavigation : IDisposable
             var button = wParam & 0xFFFFu;
             if (button == XButton1)
             {
-                _dispatcher.TryEnqueue(_goBack);
+                _dispatcher.TryEnqueue(() => _goBack());
                 return 0; // 已处理，不再向下传递。
             }
         }
