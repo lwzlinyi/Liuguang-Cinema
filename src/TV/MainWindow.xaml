@@ -137,12 +137,23 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BackButton" Grid.Column="0" Style="{StaticResource IconButtonStyle}"
-                        Background="Transparent" BorderThickness="0" Opacity="0" IsHitTestVisible="False"
-                        Margin="12,0,0,0" Click="OnBackClick"
-                        ToolTipService.ToolTip="返回 (Alt+←)" AutomationProperties.Name="返回">
-                    <FontIcon Glyph="&#xE72B;" FontSize="18" />
-                </Button>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="BackButton" Style="{StaticResource IconButtonStyle}"
+                            Background="Transparent" BorderThickness="0" Opacity="0" IsHitTestVisible="False"
+                            Margin="12,0,0,0" Click="OnBackClick"
+                            ToolTipService.ToolTip="返回 (Alt+←)" AutomationProperties.Name="返回">
+                        <FontIcon Glyph="&#xE72B;" FontSize="18" />
+                    </Button>
+                    <!-- PCbox：影视仓式品牌标题，独占标题栏一行，点击返回主页 -->
+                    <Button x:Name="BrandHomeButton" Click="OnBrandHomeClick"
+                            Background="Transparent" BorderThickness="0" Padding="6,0,0,0"
+                            VerticalAlignment="Center" AutomationProperties.Name="PCbox 返回主页"
+                            ToolTipService.ToolTip="返回主页">
+                        <TextBlock Text="PCbox" FontSize="20" FontWeight="Bold"
+                                   FontFamily="{StaticResource DisplayFontFamily}" CharacterSpacing="20"
+                                   Foreground="{ThemeResource AccentBrush}" />
+                    </Button>
+                </StackPanel>
             </Grid>
 
             <!-- 影视仓式全局顶部导航条：历史/直播/搜索/配置/线路/本地/收藏/推送/设置 -->
@@ -150,16 +161,8 @@
                     BorderBrush="{ThemeResource DividerBrush}" BorderThickness="0,0,0,1"
                     Padding="14,5">
                 <Grid ColumnSpacing="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <!-- 左上角品牌字样（侧栏隐藏后改为固定在导航条左侧，不随滚动移走） -->
-                    <TextBlock Text="PCbox" FontSize="20" FontWeight="Bold"
-                               FontFamily="{StaticResource DisplayFontFamily}" CharacterSpacing="20"
-                               Foreground="{ThemeResource AccentBrush}" VerticalAlignment="Center"
-                               AutomationProperties.Name="PCbox" />
-                    <ScrollViewer Grid.Column="1" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden"
+                    <!-- PCbox 品牌已上移至标题栏独占一行（见 BrandHomeButton），此处仅保留功能导航按钮 -->
+                    <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden"
                               VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <Button Style="{StaticResource TopNavButtonStyle}" Click="OnTopHistoryClick" Height="36" MinHeight="36" Padding="14,0" AutomationProperties.Name="历史">

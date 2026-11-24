@@ -180,10 +180,21 @@ public sealed partial class PlayerViewModel : ObservableObject
 
     /// <summary>是否已请求媒体：供播放器页中央空态使用。</summary>
     public bool HasMedia => _request is not null;
-    /// <summary>中央提示/错误态是否可见：缓冲中不叠加提示面板。</summary>
-    public bool ShowStatusPanel => !IsBuffering && !string.IsNullOrWhiteSpace(StatusMessage);
+    /// <summary>当前状态是否为需要用户处理的错误终态（决定带警告三角的提示面板是否出现）。</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(ShowStatusPanel))]
+    private bool _statusIsError;
+    /// <summary>中央提示/错误态是否可见：仅错误终态且非缓冲时显示；"正在解析/打开/恢复"等进度消息不弹警告面板。</summary>
+    public bool ShowStatusPanel => !IsBuffering && StatusIsError && !string.IsNullOrWhiteSpace(StatusMessage);
 
-    partial void OnStatusMessageChanged(string value) => OnPropertyChanged(nameof(ShowStatusPanel));
+    partial void OnStatusMessageChanged(string value)
+    {
+        // PCbox：影视仓式解析过程保持画面干净，只有真正无法播放的错误才弹警告提示。
+        StatusIsError = !string.IsNullOrWhiteSpace(value)
+            && !value.Contains("正在", StringComparison.Ordinal)
+            && value is not ("已停止播放" or "播放完毕")
+            && !value.Contains("登录已过期", StringComparison.Ordinal);
+        OnPropertyChanged(nameof(ShowStatusPanel));
+    }
     partial void OnIsBufferingChanged(bool value) => OnPropertyChanged(nameof(ShowStatusPanel));
 
     /// <summary>播放器页面把 VideoView 挂好后调用，避免“先播后挂”导致黑屏无声。</summary>

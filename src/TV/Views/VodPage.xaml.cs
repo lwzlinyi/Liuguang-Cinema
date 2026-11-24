@@ -34,6 +34,75 @@ public sealed partial class VodPage : Page
     private bool _browseLayoutReady;
     private bool _scrolledCompact;
     private void OnSearchClick(object sender, RoutedEventArgs e) => App.Window.OpenSearch();
+
+    // PCbox：影视仓式「请选择首页数据源」弹窗——两列站点网格，当前选中高亮带对勾。
+    private async void OnHomeSourceClick(object sender, RoutedEventArgs e)
+    {
+        if (XamlRoot is null) return;
+        var sites = ViewModel.Sites
+            .Where(s => s.IsSupported && !MyDriveVodProvider.Supports(s))
+            .ToArray();
+        if (sites.Length == 0) return;
+
+        const int columns = 2;
+        var rows = (sites.Length + columns - 1) / columns;
+        var grid = new Grid { ColumnSpacing = 10, RowSpacing = 10 };
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        for (var r = 0; r < rows; r++) grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+        var selectedBrush = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 0x21, 0x96, 0xF3));
+        var idleBrush = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 0x2A, 0x2B, 0x31));
+        var selectedInk = new SolidColorBrush(Microsoft.UI.Colors.White);
+        var idleInk = new SolidColorBrush(Microsoft.UI.ColorHelper.FromArgb(255, 0xF2, 0xF3, 0xF5));
+
+        ContentDialog? dialog = null;
+        for (var i = 0; i < sites.Length; i++)
+        {
+            var site = sites[i];
+            var isSelected = ReferenceEquals(site, ViewModel.SelectedSite);
+            var button = new Button
+            {
+                Content = isSelected ? "✓  " + site.Name : site.Name,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                MinHeight = 44,
+                Padding = new Thickness(10, 8),
+                CornerRadius = new CornerRadius(8),
+                Background = isSelected ? selectedBrush : idleBrush,
+                Foreground = isSelected ? selectedInk : idleInk,
+                ToolTipService.ToolTip = site.DisplayName
+            };
+            button.Click += (_, _) =>
+            {
+                // 触发 OnSelectedSiteChanged：保存 homeSite 并重新加载该站点首页。
+                ViewModel.SelectedSite = site;
+                dialog?.Hide();
+            };
+            Grid.SetRow(button, i / columns);
+            Grid.SetColumn(button, i % columns);
+            grid.Children.Add(button);
+        }
+
+        var scroll = new ScrollViewer
+        {
+            Content = grid,
+            MaxHeight = 480,
+            VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+            HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
+        };
+        dialog = new ContentDialog
+        {
+            XamlRoot = XamlRoot,
+            Title = "请选择首页数据源",
+            Content = scroll,
+            CloseButtonText = "取消",
+            DefaultButton = ContentDialogButton.Close
+        };
+        await dialog.ShowAsync();
+    }
+
     private async void OnVerifySiteClick(object sender, RoutedEventArgs e)
     {
         if (ViewModel.PendingVerification is not { } challenge || XamlRoot is null) return;

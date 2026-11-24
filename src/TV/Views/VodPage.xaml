@@ -31,12 +31,17 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
                 <TextBlock Text="主页" Style="{StaticResource SectionTitleText}" VerticalAlignment="Center" FontWeight="Bold" />
-                <Border Background="{ThemeResource SurfaceAltBrush}" BorderBrush="{ThemeResource SubtleBorderBrush}"
-                        BorderThickness="1" CornerRadius="12" Padding="10,3" VerticalAlignment="Center"
+                <!-- PCbox：点击站点角标弹出影视仓式「请选择首页数据源」弹窗 -->
+                <Button Click="OnHomeSourceClick" Background="Transparent" BorderThickness="0"
+                        Padding="10,3" MinHeight="0" VerticalAlignment="Center"
+                        AutomationProperties.Name="切换首页数据源" ToolTipService.ToolTip="切换首页数据源"
                         Visibility="{Binding SelectedSite.DisplayName, Converter={StaticResource StringToVisibility}}">
-                    <TextBlock Text="{Binding SelectedSite.DisplayName}" Style="{StaticResource MetaText}"
-                               Foreground="{ThemeResource SecondaryTextBrush}" MaxWidth="200" TextTrimming="CharacterEllipsis" />
-                </Border>
+                    <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding SelectedSite.DisplayName}" Style="{StaticResource MetaText}"
+                                   Foreground="{ThemeResource SecondaryTextBrush}" MaxWidth="200" TextTrimming="CharacterEllipsis" />
+                        <FontIcon Glyph="&#xE70D;" FontSize="10" Foreground="{ThemeResource SecondaryTextBrush}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
                 <Button Style="{StaticResource SecondaryButtonStyle}" Click="OnSearchClick"

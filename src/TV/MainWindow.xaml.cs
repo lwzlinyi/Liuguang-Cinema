@@ -354,6 +354,8 @@ public sealed partial class MainWindow : Window
     private void OnSearchNavClick(object sender, RoutedEventArgs e) => OpenSearch();
 
     // ===== 影视仓式顶部全局导航 =====
+    // PCbox 品牌按钮：点击返回主页（点播首页）。
+    private void OnBrandHomeClick(object sender, RoutedEventArgs e) => Navigate("vod");
     private void OnTopHistoryClick(object sender, RoutedEventArgs e) => NavigateLibraryTab(0);
     private void OnTopLiveClick(object sender, RoutedEventArgs e) => ViewModel.NavigateCommand.Execute("live");
     private void OnTopSearchClick(object sender, RoutedEventArgs e) => OpenSearch();
@@ -481,9 +483,17 @@ public sealed partial class MainWindow : Window
             _titleInputQueued = false;
             if (_closing || AppTitleBar.XamlRoot is not { } root) return;
             var rects = new List<RectInt32>();
+            var scale = root.RasterizationScale;
+            // PCbox 品牌按钮：标题栏左侧，需要 passthrough 才能点击返回主页。
+            if (AppTitleBar.Visibility == Visibility.Visible && BrandHomeButton.Visibility == Visibility.Visible && BrandHomeButton.IsHitTestVisible)
+            {
+                var bounds = BrandHomeButton.TransformToVisual(null).TransformBounds(
+                    new Windows.Foundation.Rect(0, 0, BrandHomeButton.ActualWidth, BrandHomeButton.ActualHeight));
+                rects.Add(new RectInt32((int)Math.Round(bounds.X * scale), (int)Math.Round(bounds.Y * scale),
+                    (int)Math.Round(bounds.Width * scale), (int)Math.Round(bounds.Height * scale)));
+            }
             if (AppTitleBar.Visibility == Visibility.Visible && BackButton.Visibility == Visibility.Visible && BackButton.IsHitTestVisible)
             {
-                var scale = root.RasterizationScale;
                 var bounds = BackButton.TransformToVisual(null).TransformBounds(
                     new Windows.Foundation.Rect(0, 0, BackButton.ActualWidth, BackButton.ActualHeight));
                 rects.Add(new RectInt32((int)Math.Round(bounds.X * scale), (int)Math.Round(bounds.Y * scale),
