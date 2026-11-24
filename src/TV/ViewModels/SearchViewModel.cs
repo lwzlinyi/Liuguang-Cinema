@@ -230,10 +230,12 @@ public sealed partial class SearchViewModel(AppServices services, Action<VodCard
     private void OpenResult(VodCardViewModel card)
     {
         var sources = new List<VodCardViewModel> { card };
+        // PCbox 聚合：每个站点取最佳的同名匹配加入片源下拉，不再要求“恰好 1 个匹配”
+        // （多季剧同一站点常有多条结果，旧逻辑会导致整站被跳过）。
         foreach (var group in _groups.Where(group => group.Site.Key != card.Item.SiteKey))
         {
-            var matches = group.Hits.Where(hit => SameWork(card.Item, hit.Item)).Take(2).ToArray();
-            if (matches.Length == 1) sources.Add(matches[0]);
+            var match = group.Hits.Where(hit => SameWork(card.Item, hit.Item)).FirstOrDefault();
+            if (match is not null) sources.Add(match);
         }
         var details = sources.Select(source => new VodCardViewModel(source.Item.Copy(), services)
         {

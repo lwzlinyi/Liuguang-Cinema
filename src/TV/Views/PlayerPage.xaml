@@ -65,6 +65,22 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
+
+        <!-- PCbox 影视仓式底部快捷胶囊按钮 -->
+        <Style x:Key="QuickBarButtonStyle" TargetType="Button" BasedOn="{StaticResource PlayerIconButtonStyle}">
+            <Setter Property="MinWidth" Value="58" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Background" Value="#FF24262D" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#1AFFFFFF" />
+            <Setter Property="Foreground" Value="#FFF2F3F5" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
     </Page.Resources>
 
     <Grid x:Name="RootGrid">
@@ -257,6 +273,32 @@
                     <TextBlock Text="{Binding QualityMessage}" Style="{StaticResource MetaText}"
                                Foreground="{ThemeResource AccentBrush}" MaxLines="1" TextTrimming="CharacterEllipsis"
                                Visibility="{Binding QualityMessage, Converter={StaticResource StringToVisibility}}" />
+
+                    <!-- PCbox 影视仓式底部快捷操作条：下集/上集/刷新/重播/弹幕云搜/选集/倍速/内核/硬解/渲染/弹幕/片头/片尾/字幕 -->
+                    <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden"
+                                  VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Disabled"
+                                  IsVerticalScrollChainingEnabled="False">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="下集" Command="{Binding NextEpisodeCommand}" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="上集" Command="{Binding PreviousEpisodeCommand}" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="刷新" Command="{Binding RefreshCommand}" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="重播" Command="{Binding ReplayCommand}" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="弹幕云搜" Click="OnDanmakuCloudSearchClick" />
+                            <Button x:Name="QuickPlaylistButton" Style="{StaticResource QuickBarButtonStyle}" Content="选集" Click="OnQuickPlaylistClick"
+                                    Visibility="{Binding HasPlaylist, Converter={StaticResource BoolToVisibility}}" />
+                            <Button x:Name="QuickRateButton" Style="{StaticResource QuickBarButtonStyle}" Content="{Binding RateText}" Click="OnQuickRateClick" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="{Binding PlayerEngineText}" Command="{Binding CyclePlayerEngineCommand}"
+                                    ToolTipService.ToolTip="播放内核 (Windows 端为 IJK/LibVLC)" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="{Binding HardwareDecodeText}" Command="{Binding ToggleHardwareDecodeCommand}"
+                                    ToolTipService.ToolTip="硬解 / 软解切换" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="{Binding RendererText}" Command="{Binding CycleRendererCommand}"
+                                    ToolTipService.ToolTip="渲染方式切换" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="弹幕" Click="OnDanmakuToggleClick" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="{Binding IntroTimeText}" Click="OnTimingSettingsClick" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="{Binding OutroTimeText}" Click="OnTimingSettingsClick" />
+                            <Button Style="{StaticResource QuickBarButtonStyle}" Content="字幕" Click="OnSubtitleSettingsClick" />
+                        </StackPanel>
+                    </ScrollViewer>
 
                     <!-- 底部第一行：播放进度 -->
                     <Grid x:Name="ProgressRow" Height="{StaticResource IconButtonSize}"

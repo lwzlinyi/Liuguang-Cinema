@@ -143,12 +143,6 @@
                         ToolTipService.ToolTip="返回 (Alt+←)" AutomationProperties.Name="返回">
                     <FontIcon Glyph="&#xE72B;" FontSize="18" />
                 </Button>
-
-                <!-- 影视仓式右上角实时时间 -->
-                <TextBlock x:Name="ClockText" Grid.Column="1" HorizontalAlignment="Right"
-                           VerticalAlignment="Center" Margin="0,0,150,0" FontSize="13"
-                           Foreground="{ThemeResource SecondaryTextBrush}" IsHitTestVisible="False" />
-
             </Grid>
 
             <!-- 影视仓式全局顶部导航条：历史/直播/搜索/配置/线路/本地/收藏/推送/设置 -->
@@ -203,8 +197,8 @@
             <Frame x:Name="ContentFrame" Grid.Row="2" Background="Transparent" />
         </Grid>
 
-        <!-- 关闭行为面板锚点（贴在标题栏右上，系统按钮下方） -->
-        <Border x:Name="ClosePromptAnchor" Width="46" Height="32" HorizontalAlignment="Right"
+        <!-- 关闭行为面板锚点（贴在标题栏右上，系统按钮下方；放到右侧列避免弹框跑到左侧栏） -->
+        <Border x:Name="ClosePromptAnchor" Grid.Column="1" Width="46" Height="32" HorizontalAlignment="Right"
                 VerticalAlignment="Top" IsHitTestVisible="False" />
     </Grid>
 </Window>

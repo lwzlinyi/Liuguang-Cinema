@@ -28,7 +28,7 @@ public sealed partial class MainWindow : Window
     private bool _leavingPlayer;
     private Task? _leavePlayerTask;
     private readonly WindowTray? _tray;
-    private Microsoft.UI.Dispatching.DispatcherQueueTimer? _clockTimer;
+    private MouseBackNavigation? _mouseBack;
     private WindowCloseBehavior _closeBehavior;
     private bool _titleInputQueued;
     private RectInt32[]? _titleInputRegions;
@@ -65,7 +65,6 @@ public sealed partial class MainWindow : Window
         RestorePlacement();
         AppWindow.Changed += (_, _) => CapturePlacement();
         Title = "PCbox";
-        StartClock();
         Diagnostics.Log("MainWindow initialized");
         if (!App.PlayerOnly) App.Services.Sniffer.Attach(ShellRoot);
         ViewModel = new MainViewModel(App.Services, DispatcherQueue);
@@ -96,6 +95,12 @@ public sealed partial class MainWindow : Window
         backShortcut.Invoked += (_, args) => { GoBack(); args.Handled = true; };
         ShellRoot.KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden;
         ShellRoot.KeyboardAccelerators.Add(backShortcut);
+        // PCbox：键盘 Backspace 也可返回（输入框聚焦时由系统快捷键自然让位）。
+        var backspaceShortcut = new KeyboardAccelerator { Key = Windows.System.VirtualKey.Back };
+        backspaceShortcut.Invoked += (_, args) => { GoBack(); args.Handled = true; };
+        ShellRoot.KeyboardAccelerators.Add(backspaceShortcut);
+        // PCbox：鼠标侧键（XButton1）返回，blocking 与托盘图标使用不同 subclass id。
+        _mouseBack = new MouseBackNavigation(WinRT.Interop.WindowNative.GetWindowHandle(this), DispatcherQueue, GoBack);
         if (!App.PlayerOnly)
         {
             var searchShortcut = new KeyboardAccelerator
@@ -119,7 +124,7 @@ public sealed partial class MainWindow : Window
             }
             else Navigate("vod");
             _ = LoadPreferencesAsync();
-            if (!App.PlayerOnly) _ = ViewModel.Settings.CheckUpdatesOnStartupAsync();
+            // PCbox：不再在启动时自动检测新版本，避免弹出升级提示（仍可在设置里手动检查）。
         });
     }
 
@@ -392,22 +397,6 @@ public sealed partial class MainWindow : Window
         catch (Exception ex) { Diagnostics.Log($"打开本地视频失败: {ex.GetType().Name} {ex.Message}"); }
     }
 
-    // 影视仓式右上角实时时钟：yyyy年M月d日 HH:mm:ss
-    private void StartClock()
-    {
-        if (App.PlayerOnly) return;
-        void Tick()
-        {
-            var now = DateTime.Now;
-            ClockText.Text = $"{now.Year}年{now.Month}月{now.Day}日 {now:HH:mm:ss}";
-        }
-        Tick();
-        _clockTimer = DispatcherQueue.CreateTimer();
-        _clockTimer.Interval = TimeSpan.FromSeconds(1);
-        _clockTimer.Tick += (_, _) => Tick();
-        _clockTimer.Start();
-    }
-
     internal void OpenSearch()
     {
         if (App.PlayerOnly) return;
@@ -658,6 +647,7 @@ public sealed partial class MainWindow : Window
         _updateDialog?.Hide();
         Diagnostics.Log("Shutdown requested");
         _tray?.Dispose();
+        _mouseBack?.Dispose();
         try
         {
             if (!App.PlayerOnly)

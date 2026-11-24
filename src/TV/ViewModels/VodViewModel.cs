@@ -104,6 +104,30 @@ public sealed partial class VodViewModel : ObservableObject
         finally { IsFindingSources = false; }
     }
 
+    // PCbox 聚合：后台检索其他站点同名资源并合并到片源下拉，不抢占手动换源的 IsFindingSources 状态。
+    private async Task AutoAggregateSourcesAsync(VodCardViewModel card, CancellationToken token)
+    {
+        try
+        {
+            var candidates = await _services.SourceRecovery.FindAsync(card.Item, token, limit: 12);
+            if (candidates.Count == 0 || token.IsCancellationRequested || !ReferenceEquals(SelectedCard, card)) return;
+            var existing = card.MatchedSources.Count > 0 ? card.MatchedSources : [card];
+            var sources = existing.Where(source => !candidates.Any(item => item.SiteKey == source.Item.SiteKey))
+                .Concat(candidates.Select(item => new VodCardViewModel(item, _services)
+                {
+                    Poster = card.Poster,
+                    Rating = card.Rating
+                })).ToArray();
+            foreach (var source in sources) source.MatchedSources = sources;
+            if (!ReferenceEquals(SelectedCard, card)) return;
+            OnPropertyChanged(nameof(DetailSources));
+            OnPropertyChanged(nameof(HasAlternateSources));
+            if (!token.IsCancellationRequested) DetailStatus = $"已聚合 {sources.Length} 个片源，可在“片源”中切换线路。";
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex) { Diagnostics.Log($"自动聚合片源失败: {ex.GetType().Name}"); }
+    }
+
     partial void OnEpisodeFilterChanged(string value) => UpdateEpisodes();
 
     public async Task InitializeAsync()
@@ -506,6 +530,11 @@ public sealed partial class VodViewModel : ObservableObject
             await RestoreHistoryAsync(detail, token);
             IsFavorite = await _services.Database.IsFavoriteAsync(DatabaseKey(detail), token);
             if (Lines.Count == 0) DetailStatus = "详情已加载，但没有可播放的线路。";
+            // PCbox 聚合：进入详情后若"片源"下拉只有一个来源，后台自动检索其他站点的同名资源，
+            // 填充 MatchedSources，使片源下拉可切换搜索结果中的其他线路。检测随详情取消而中止。
+            if (Lines.Count > 0 && DetailSources.Count <= 1 && !token.IsCancellationRequested &&
+                ReferenceEquals(SelectedCard, card))
+                _ = AutoAggregateSourcesAsync(card, token);
         }
         catch (OperationCanceledException) { }
         catch (Exception ex) { if (!token.IsCancellationRequested) DetailStatus = ex.Message; }

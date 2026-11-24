@@ -1419,8 +1419,10 @@ public sealed partial class PlayerPage : Page
     {
         if (e.Handled) return;
         if (e.OriginalSource is FrameworkElement element && IsInsideControls(element)) return;
-        // 双击画面只切换控制层显隐；全屏必须显式点「全屏」按钮或按 F，避免误触全屏。
-        if (_controlsVisible) HideControlsNow(); else ShowControls();
+        // PCbox：双击画面暂停/播放（与空格一致）；单击仍负责控制层显隐。
+        ViewModel.TogglePauseCommand.Execute(null);
+        ShowOsd(ViewModel.IsPlaying ? "继续播放" : "已暂停");
+        ShowControls();
         e.Handled = true;
     }
 
@@ -1634,6 +1636,27 @@ public sealed partial class PlayerPage : Page
     }
 
     private void OnDanmakuToggleClick(object sender, RoutedEventArgs e) => _ = ToggleDanmakuAsync();
+
+    // ===== PCbox 影视仓式快捷按钮点击 =====
+    private void OnDanmakuCloudSearchClick(object sender, RoutedEventArgs e)
+    {
+        _hideTimer.Stop();
+        _ = OpenDanDanPlaySearchDialogAsync();
+    }
+
+    private void OnQuickPlaylistClick(object sender, RoutedEventArgs e)
+    {
+        if (!ViewModel.HasPlaylist) return;
+        ShowControls();
+        PlaylistFlyout.ShowAt(QuickPlaylistButton);
+    }
+
+    private void OnQuickRateClick(object sender, RoutedEventArgs e)
+    {
+        if (RateFlyout.Items.Count == 0) BuildFlyouts();
+        ShowControls();
+        RateFlyout.ShowAt(QuickRateButton);
+    }
 
     private async Task ToggleDanmakuAsync()
     {

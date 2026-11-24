@@ -59,22 +59,17 @@ public sealed partial class DetailPage : Page
     {
         if (_observed is not null)
         {
-            _observed.Items.CollectionChanged -= OnRelatedChanged;
             _observed.Episodes.CollectionChanged -= OnEpisodesChanged;
             _observed.PropertyChanged -= OnObservedPropertyChanged;
         }
         _observed = model;
         if (_observed is not null)
         {
-            _observed.Items.CollectionChanged += OnRelatedChanged;
             _observed.Episodes.CollectionChanged += OnEpisodesChanged;
             _observed.PropertyChanged += OnObservedPropertyChanged;
         }
-        UpdateRelated();
         ScrollCurrentEpisode();
     }
-
-    private void OnRelatedChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => UpdateRelated();
 
     private void OnEpisodesChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => ScrollCurrentEpisode();
 
@@ -91,9 +86,6 @@ public sealed partial class DetailPage : Page
                 EpisodeGrid.ScrollIntoView(episode);
         });
     }
-
-    private void UpdateRelated() =>
-        RelatedSection.Visibility = _observed is { Items.Count: > 0 } ? Visibility.Visible : Visibility.Collapsed;
 
     private void OnPlayEpisodeClick(object sender, RoutedEventArgs e)
     {
@@ -126,39 +118,6 @@ public sealed partial class DetailPage : Page
     {
         if (DataContext is VodViewModel viewModel && (viewModel.CurrentEpisode ?? viewModel.Episodes.FirstOrDefault()) is { } episode)
             viewModel.PlayEpisodeCommand.Execute(episode);
-    }
-
-    private void OnRelatedClick(object sender, RoutedEventArgs e)
-    {
-        if (sender is not Button { DataContext: VodCardViewModel card } || DataContext is not VodViewModel viewModel) return;
-        viewModel.SelectedCard = card;
-        DetailScroller.ChangeView(null, 0, null, true);
-        MotionService.EnterSection(HeroBanner, offsetY: 12);
-    }
-
-    private void OnRelatedIn(object sender, PointerRoutedEventArgs e)
-    {
-        if (sender is FrameworkElement element) MotionService.SetCardHover(element, null, null, true);
-    }
-
-    private void OnRelatedOut(object sender, PointerRoutedEventArgs e)
-    {
-        if (sender is FrameworkElement element) MotionService.SetCardHover(element, null, null, false);
-    }
-
-    private void OnRelatedPressed(object sender, PointerRoutedEventArgs e)
-    {
-        if (sender is FrameworkElement element) MotionService.SetCardPressed(element, true);
-    }
-
-    private void OnRelatedReleased(object sender, PointerRoutedEventArgs e)
-    {
-        if (sender is FrameworkElement element) MotionService.SetCardPressed(element, false);
-    }
-
-    private void OnRelatedContainerChanging(ListViewBase sender, ContainerContentChangingEventArgs e)
-    {
-        if (!e.InRecycleQueue && e.Item is VodCardViewModel card) _ = card.LoadVisualAsync();
     }
 
     private void OnCastClick(object sender, RoutedEventArgs e) => App.Window.Navigate("cast");

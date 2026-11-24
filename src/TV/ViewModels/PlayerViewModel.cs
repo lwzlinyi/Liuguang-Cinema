@@ -154,7 +154,29 @@ public sealed partial class PlayerViewModel : ObservableObject
     [ObservableProperty] private bool _skipEnabled = true;
     [ObservableProperty] private string _timingMessage = string.Empty;
     public bool HasTiming => Timing.IntroEndMs > 0 || Timing.OutroStartMs > 0;
-    partial void OnTimingChanged(EpisodeTiming value) => OnPropertyChanged(nameof(HasTiming));
+    partial void OnTimingChanged(EpisodeTiming value)
+    {
+        OnPropertyChanged(nameof(HasTiming));
+        OnPropertyChanged(nameof(IntroTimeText));
+        OnPropertyChanged(nameof(OutroTimeText));
+    }
+
+    // ===== PCbox 影视仓式播放条显示文本 =====
+    private static string FormatClock(long ms)
+    {
+        var total = Math.Max(0, ms / 1000);
+        return $"{total / 60:00}:{total % 60:00}";
+    }
+    public string IntroTimeText => $"片头{FormatClock(Timing.IntroEndMs)}";
+    public string OutroTimeText => $"片尾{FormatClock(Timing.OutroStartMs)}";
+    public string HardwareDecodeText => _services.Player.HardwareDecoding ? "硬解" : "软解";
+    public string RendererText => _services.Player.HardwareDecoding ? "D3D11" : "CPU";
+    public string PlayerEngineText => "IJK";
+    public void RefreshControlTexts()
+    {
+        OnPropertyChanged(nameof(HardwareDecodeText));
+        OnPropertyChanged(nameof(RendererText));
+    }
 
     /// <summary>是否已请求媒体：供播放器页中央空态使用。</summary>
     public bool HasMedia => _request is not null;
@@ -443,6 +465,56 @@ public sealed partial class PlayerViewModel : ObservableObject
             StatusMessage = string.Empty;
         }
         finally { _loadGate.Release(); }
+    }
+
+    // ===== PCbox 影视仓式播放控制命令 =====
+    [RelayCommand]
+    private void Replay()
+    {
+        if (_request is null) return;
+        _services.Player.Seek(0);
+        PositionMs = 0;
+        PositionText = Format(0);
+        SeekPerformed?.Invoke(this, 0);
+        if (!IsPlaying) TogglePause();
+    }
+
+    [RelayCommand]
+    private async Task RefreshAsync()
+    {
+        if (_request is null) return;
+        var request = _request.Copy();
+        request.StartPositionMs = Math.Max(0, _services.Player.LastSnapshot.TimeMs);
+        await LoadAsync(request);
+    }
+
+    [RelayCommand]
+    private void ToggleHardwareDecode()
+    {
+        var next = !_services.Player.HardwareDecoding;
+        _services.Player.HardwareDecoding = next;
+        try
+        {
+            if (_services.Player.MediaPlayer is { } mediaPlayer)
+                mediaPlayer.EnableHardwareDecoding = next;
+        }
+        catch (Exception ex) { Diagnostics.Log($"切换硬解失败: {ex.GetType().Name}"); }
+        RefreshControlTexts();
+    }
+
+    [RelayCommand]
+    private void CycleRenderer()
+    {
+        // LibVLC 本机内核：在硬解(D3D11) / 软解之间轮换，视觉上对应影视仓的「渲染」切换。
+        ToggleHardwareDecode();
+    }
+
+    [RelayCommand]
+    private void CyclePlayerEngine()
+    {
+        // 影视仓的 IJK/EXO/系统为安卓播放器内核；Windows 端固定 LibVLC(IJK) 内核。
+        // 这里轮换解码组合以对应「播放器内核」切换的交互形态。
+        ToggleHardwareDecode();
     }
 
     [RelayCommand]

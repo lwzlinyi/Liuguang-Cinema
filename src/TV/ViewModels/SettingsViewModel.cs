@@ -93,21 +93,17 @@ public sealed partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private string _danDanPlayAppSecretInput = string.Empty;
     [ObservableProperty] private bool _isTestingDanDanPlay;
 
-    [ObservableProperty] private bool _autoCheckUpdates = true;
+    [ObservableProperty] private bool _autoCheckUpdates = false;
     [ObservableProperty] private bool _isCheckingUpdates;
     [ObservableProperty] private string _updateStatus = "尚未检查更新";
     [ObservableProperty, NotifyPropertyChangedFor(nameof(HasAvailableUpdate))] private AppUpdateRelease? _availableUpdate;
     public bool HasAvailableUpdate => AvailableUpdate is not null;
 
-    internal async Task CheckUpdatesOnStartupAsync()
+    internal Task CheckUpdatesOnStartupAsync()
     {
-        try
-        {
-            AutoCheckUpdates = await Bool("updates.autoCheck", true);
-            if (!AutoCheckUpdates || !await _services.Updates.ShouldCheckAutomaticallyAsync()) return;
-            await CheckForUpdatesAsync(userInitiated: false);
-        }
-        catch (Exception ex) { Diagnostics.Log($"自动更新检查初始化失败: {ex.GetType().Name}"); }
+        // PCbox：永久禁用自动更新检测，不再弹出升级提示（设置里仍可手动检查）。
+        AutoCheckUpdates = false;
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
@@ -170,7 +166,7 @@ public sealed partial class SettingsViewModel : ObservableObject
         CloudThreads = await Int("playback.cloudThreads", 3);
         CloudChunkMb = await Int("playback.cloudChunkMb", 2);
         ThemeIndex = await Int("ui.theme", 0);
-        AutoCheckUpdates = await Bool("updates.autoCheck", true);
+        AutoCheckUpdates = await Bool("updates.autoCheck", false);
         DnsIndex = await Int("network.dns", 0);
         DownloadFolder = await _services.Database.GetSettingAsync("downloads.defaultFolder") ?? AppPaths.DefaultDownloads;
         AliToken = string.Empty;
